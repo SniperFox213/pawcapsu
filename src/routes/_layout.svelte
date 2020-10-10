@@ -9,7 +9,7 @@
 </style>
 
 <svelte:head>
-	<title>unauthed</title>
+	<title>paw universes</title>
 
 	<!-- Favicons and other things -->
 	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
