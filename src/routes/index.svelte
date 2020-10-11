@@ -34,7 +34,7 @@
 			</div>
 
 			<!-- Texts -->
-			<div class="text-center w-2/6 mt-8">
+			<div class="text-center w-full px-4 md:px-0 md:w-3/6 lg:w-2/6 mt-8">
 				<!-- Big Title -->
 				<h1 class="text-2xl text-white">Социальная сеть для всего связанного с <span style="font-family: 'Caveat', cursive;" class="text-3xl text-red-400">Лапками</span>.</h1>
 
