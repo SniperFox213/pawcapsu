@@ -10,12 +10,17 @@
 	import { fade } from "svelte/transition";
 	import { onMount } from "svelte";
 
+	// Importing components
+	import Popover from "svelte-popover";
+
 	// Let's now change our loaded state on component mount.
 	onMount(() => {
 		setTimeout(() => {
 			loaded = true;
 		}, 25)
 	});
+
+	let siteMenuOpened = false;
 
 	let button01Hovered = false;
 	let button02Hovered = false;
@@ -30,9 +35,58 @@
 		<!-- Header -->
 		<header style="z-index: 1;" class="bg-black fixed w-full px-4 py-2 md:px-12 flex justify-between items-center">
 			<!-- Logotype -->
-			<button on:mouseover={(e) => button02Hovered = true} on:mouseout={(e) => button02Hovered = false} class="px-2 py-2 rounded-md hover:bg-white">
-				<svg style="height: 1.4rem; width: 1.4rem;" xmlns="http://www.w3.org/2000/svg" fill="{ button02Hovered ? "#000" : "#fff" }" viewBox="0 0 173.24 181.66"><defs></defs><g id="Layer_2" data-name="Layer 2"><g id="Layer_1-2" data-name="Layer 1"><path class="cls-1" d="M140.38,119.5,112.45,91.57a37.23,37.23,0,0,0-52.16,0L32.86,119a36.42,36.42,0,0,0,0,51.5h0a36.42,36.42,0,0,0,51.5,0l2-2L88.88,171a36.42,36.42,0,0,0,51.5,0h0A36.42,36.42,0,0,0,140.38,119.5Z"/><ellipse class="cls-1" cx="22.2" cy="71.96" rx="21.36" ry="31.57" transform="matrix(0.97, -0.26, 0.26, 0.97, -17.87, 8.2)"/><ellipse class="cls-1" cx="151.04" cy="71.96" rx="31.57" ry="21.36" transform="translate(42.44 199.23) rotate(-75)"/><ellipse class="cls-1" cx="63.26" cy="31.57" rx="21.36" ry="31.57"/><ellipse class="cls-1" cx="112.67" cy="31.57" rx="21.36" ry="31.57"/></g></g></svg>
-			</button>
+			<Popover placement="bottom-start" arrow={false} bind:open={siteMenuOpened} overlayColor="rgba(0,0,0,0.25)">
+				<button slot="target" on:mouseover={(e) => button02Hovered = true} on:mouseout={(e) => button02Hovered = false} class="px-2 py-2 rounded-md { siteMenuOpened || button02Hovered ? "bg-white" : "" }">
+					<svg style="height: 1.4rem; width: 1.4rem;" xmlns="http://www.w3.org/2000/svg" fill="{ button02Hovered || siteMenuOpened ? "#000" : "#fff" }" viewBox="0 0 173.24 181.66"><defs></defs><g id="Layer_2" data-name="Layer 2"><g id="Layer_1-2" data-name="Layer 1"><path class="cls-1" d="M140.38,119.5,112.45,91.57a37.23,37.23,0,0,0-52.16,0L32.86,119a36.42,36.42,0,0,0,0,51.5h0a36.42,36.42,0,0,0,51.5,0l2-2L88.88,171a36.42,36.42,0,0,0,51.5,0h0A36.42,36.42,0,0,0,140.38,119.5Z"/><ellipse class="cls-1" cx="22.2" cy="71.96" rx="21.36" ry="31.57" transform="matrix(0.97, -0.26, 0.26, 0.97, -17.87, 8.2)"/><ellipse class="cls-1" cx="151.04" cy="71.96" rx="31.57" ry="21.36" transform="translate(42.44 199.23) rotate(-75)"/><ellipse class="cls-1" cx="63.26" cy="31.57" rx="21.36" ry="31.57"/><ellipse class="cls-1" cx="112.67" cy="31.57" rx="21.36" ry="31.57"/></g></g></svg>
+				</button>
+
+				<div slot="content" style="min-width: 26rem;" class="pt-4">
+					<div class="bg-white relative rounded-md shadow-lg px-3 py-6">
+						<!-- Navbar -->
+						<div class="w-full py-3 text-xs flex justify-center items-center">
+							<button class="mx-2 text-sm border-b-1 border-dotted border-gray-100 text-black">
+								Контент
+							</button>
+
+							<button class="mx-2 text-gray-700">
+								Общение
+							</button>
+
+							<button class="mx-2 text-gray-700">
+								Помощь
+							</button>
+						</div>
+
+						<!-- Content -->
+						<div class="flex flex-wrap justify-center">
+							<div class="w-32 h-32 px-3 py-3 relative">
+								<div class="w-full h-full rounded-md bg-red-500">
+								
+								</div>
+							</div>
+
+							<div class="w-32 h-32 px-3 py-3 relative">
+								<div class="w-full h-full rounded-md bg-red-500">
+								
+								</div>
+							</div>
+
+							<div class="w-32 h-32 px-3 py-3 relative">
+								<div class="w-full h-full rounded-md bg-red-500">
+								
+								</div>
+							</div>
+						</div>
+
+						<!-- "Show all" Button -->
+						<div class="mt-3 w-full flex justify-center">
+							<button class="text-xs text-gray-700 border-b-1 border-dotted border-gray-700">
+								Показать всё
+							</button>
+						</div>
+					</div>
+				</div>
+			</Popover>
 
 			<!-- User-related -->
 			<div class="flex items-center">
