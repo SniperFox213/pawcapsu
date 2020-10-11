@@ -5,7 +5,7 @@
 
 <!-- Importing some fonts -->
 <style>
-	@import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
+	@import url('https://fonts.googleapis.com/css2?family=Manrope&display=swap');
 </style>
 
 <svelte:head>
@@ -20,6 +20,6 @@
 	<meta name="theme-color" content="#ffffff">
 </svelte:head>
 
-<main style="font-family: 'Raleway', sans-serif;">
+<main style="font-family: 'Manrope', sans-serif;">
 	<slot></slot>
 </main>
