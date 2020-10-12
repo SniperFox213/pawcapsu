@@ -17,6 +17,11 @@ module.exports = {
 
       borderWidth: {
         '1': '1px'
+      },
+
+      minWidth: {
+        '26rem': '26rem',
+        'screen': '100vw'
       }
     },
   },
