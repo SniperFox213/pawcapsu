@@ -15,6 +15,7 @@
 	// Importing PROTOTYPE components
 	import SiteMenu from "../components/prototype/SiteMenu.svelte";
 	import UserLine from "../components/prototype/UserlineHeader.svelte";
+  import Hero from "../components/prototype/Hero.svelte";
 
 	// Let's now change our loaded state on component mount.
 	onMount(() => {
@@ -46,19 +47,6 @@
 
 					<input class="w-full text-black" type="text" placeholder="Поиск...">
 				</div>
-
-				<!-- Other Things -->
-				<!-- <div class="w-full relative px-4">
-					#Overlay
-					<div style="z-index: 2; background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(0,0,0,1) 100%);" class="absolute inset-x-0 w-full h-full"></div>
-
-					<div style="z-index: 1;" class="flex">
-						<p class="text-gray-100 text-sm">#Lorem ipsum</p>
-						<p class="text-gray-100 text-sm">#Lorem ipsum</p>
-						<p class="text-gray-100 text-sm">#Lorem ipsum</p>
-						<p class="text-gray-100 text-sm">#Lorem ipsum</p>
-					</div>
-				</div> -->
 			</div>
 
 			<!-- User-related -->
@@ -67,17 +55,14 @@
 
 		<main style="z-index: 1;" class="bg-gray-100 w-full flex flex-col items-center justify-center">
 
-			<!-- Some kind of a Hero Menu -->
-			<div style="background-image: url('https://source.unsplash.com/random/1000x900'); background-size: cover; background-repeat: no-repeat;" class="w-full h-100vh relative">
-				<!-- Overlay -->
-				<div style="background: rgba(0,0,0,0.6)" class="absolute inset-0 w-full h-full flex justify-center items-center">
-					<h1 class="text-white text-2xl font-semibold">Hello there!</h1>
-				</div>
-			</div>
+      <!-- Hero -->
+      <Hero />
 
 			<!-- Content -->
 			<div class="w-full h-full flex flex-col md:flex-row flex-wrap justify-center px-2 py-16 pt-36">
-				{ #each posts as post }
+        <!-- Navbar -->
+
+        { #each posts as post }
 					<div class="w-full md:w-1/2 lg:w-1/4 px-2 py-2 relative">
 						<!-- Post Content
 						@type: Image Submission -->
