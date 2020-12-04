@@ -9,6 +9,10 @@ const dev = NODE_ENV === 'development';
 const app = express();
 
 // @backend
+// Importing our api right into our application
+import api from "./api/routes/index.js";
+
+app.use('/api', api);
 
 // @frontend
 app.use(
