@@ -14,8 +14,6 @@
 	import Header from "../components/Layout/Header/index.svelte";
 
 	// Importing PROTOTYPE components
-	import SiteMenu from "../components/prototype/SiteMenu.svelte";
-	import UserLine from "../components/prototype/UserlineHeader.svelte";
   import Hero from "../components/prototype/Hero.svelte";
 
 	// Let's now change our loaded state on component mount.
