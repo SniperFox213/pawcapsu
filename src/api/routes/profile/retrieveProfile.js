@@ -1,5 +1,5 @@
 // Importing modules
-import { client } from "../../storage.js";
+import client from "../../storage.js";
 import { query as q } from "faunadb";
 
 // Our Module function
