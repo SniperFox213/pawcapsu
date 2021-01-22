@@ -1,30 +1,41 @@
+const { tailwindExtractor } = require("tailwindcss/lib/lib/purgeUnusedStyles");
+
 module.exports = {
-  future: {
-    // removeDeprecatedGapUtilities: true,
-    // purgeLayersByDefault: true,
-  },
-  purge: [],
-  theme: {
-    extend: {
-      height: {
-        '100vh': '100vh'
-      },
+	purge: {
+		content: [
+			"./src/**/*.html",
+			"./src/**/*.svelte",
+		],
+		options: {
+			defaultExtractor: (content) => [
+				// This is an internal Tailwind function that we're not supposed to be allowed to use
+				// So if this stops working, please open an issue at
+				// https://github.com/babichjacob/sapper-postcss-template/issues
+				// rather than bothering Tailwind Labs about it
+				...tailwindExtractor(content),
+				// Match Svelte class: directives (https://github.com/tailwindlabs/tailwindcss/discussions/1731)
+				...[...content.matchAll(/(?:class:)*([\w\d-/:%.]+)/gm)].map(([_match, group, ..._rest]) => group),
+			],
+			keyframes: true,
+		},
+	},
+	theme: {
+		extend: {
+			backgroundColor: {
+				"dark": "#1f1d2b",
+				"light-dark": "#353340",
+				"lighter-dark": "#ACACA7"
+			},
 
-      fontSize: {
-        'extra-xss': '0.50rem',
-        'extra-xs': '0.65rem'
-      },
-
-      borderWidth: {
-        '1': '1px'
-      },
-
-      minWidth: {
-        '26rem': '26rem',
-        'screen': '100vw'
-      }
-    },
-  },
-  variants: {},
-  plugins: [],
-}
+			textColor: {
+				"dark": "#1f1d2b",
+				"light-dark": "#5A5861",
+				"lighter-dark": "#ACACA7"
+			}
+		},
+	},
+	variants: {
+		extend: {},
+	},
+	plugins: [],
+};

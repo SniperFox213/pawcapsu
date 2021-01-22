@@ -1,0 +1,31 @@
+[
+  {
+    "id": "explore",
+    "href": "/explore",
+    "category": "content",
+    "icon": "home",
+    "title": "Исследовать"
+  },
+  {
+    "id": "trending",
+    "href": "/explore/trending",
+    "category": "content",
+    "icon": "bar-chart",
+    "title": "В тренде"
+  },
+
+  {
+    "id": "chats",
+    "href": "/chats",
+    "category": "services",
+    "icon": "message-circle",
+    "title": "Чаты"
+  },  
+  {
+    "id": "bookmarks",
+    "href": "/profile/bookmarks",
+    "category": "services",
+    "icon": "bookmark",
+    "title": "Закладки"
+  }
+]

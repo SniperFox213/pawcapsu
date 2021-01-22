@@ -1,71 +1,66 @@
 <script>
-	// Let's now import our styles component
-	import styles from "../components/styles.svelte";
-	import { fade } from "svelte/transition";
-
-	import profile from "../stores/profile.js";
-
-	// Let's now check something very important...
-	import Cookie from "cookie-universal";
-	const cookies = Cookie();
-
-	import { goto } from "@sapper/app"; 
-	import { onMount } from "svelte";
-
-	let loaded = false;
-
-	onMount(() => {
-		if (!cookies.get('guide')) {
-			goto('/guide');
-		};
-
-		// And now let's try to load our user up.
-		setTimeout(() => {
-			if (!cookies.get('token')) {
-				// User isn't logged in.
-				profile.forceProfile({ id: 0 });
-			} else {
-				// Let's try to load our user data.
-				profile.loadProfile(cookies.get('token'));
-			};
-		}, 1000);
-	});
+	// Importing components
+	import { Sidebar } from "../components";
 </script>
 
-<!-- Importing some fonts -->
-<style>
-	@import url('https://fonts.googleapis.com/css2?family=Manrope&display=swap');
+<!-- Main -->
+<main class="w-full h-screen flex bg-dark">
+	<Sidebar />
 
-	#logo {
-		animation: pulse 1.5s infinite ease-in-out;
-	}
+	<!-- Container -->
+	<div class="w-full relative flex flex-col">
+		<!-- Header -->
+		<div class="w-full flex justify-between items-center h-16 px-8">
+			<!-- Search -->
+			<div class="w-2/3 rounded-md py-2 px-4 bg-light-dark flex items-center justify-between">
+				<input class="flex-grow bg-light-dark text-white" placeholder="Search" type="text">
 
-	@keyframes pulse {
-		0%   { opacity: 100% }
-		50%  { opacity: 50% }
-		100% { opacity: 100% }
-	}
-</style>
+				<!-- Icon -->
+				<svg class="w-4 h-4 text-light-dark" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+			</div>
 
-<svelte:head>
-	<title>paw universes</title>
+			<!-- Account -->
+			<div class="w-1/3 flex justify-end items-center">
+				<!-- Avatar -->
+				<div class="w-8 h-8 rounded-full bg-red-400"></div>
 
-	<!-- Favicons and other things -->
-	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-	<link rel="manifest" href="/site.webmanifest">
-	<meta name="msapplication-TileColor" content="#da532c">
-	<meta name="theme-color" content="#ffffff">
-</svelte:head>
+				<!-- Name -->
+				<h2 class="text-md text-white font-medium ml-2">Marsh Jameson</h2>
 
-{ #if $profile.id == null }
-	<div transition:fade style="z-index: 2;" class="fixed w-full h-full bg-black flex justify-center items-center">
-		<!-- Logotype -->
-    <svg id="logo" style="height: 2rem; width: 2rem;" xmlns="http://www.w3.org/2000/svg" fill="#fff" viewBox="0 0 173.24 181.66"><defs></defs><g id="Layer_2" data-name="Layer 2"><g id="Layer_1-2" data-name="Layer 1"><path class="cls-1" d="M140.38,119.5,112.45,91.57a37.23,37.23,0,0,0-52.16,0L32.86,119a36.42,36.42,0,0,0,0,51.5h0a36.42,36.42,0,0,0,51.5,0l2-2L88.88,171a36.42,36.42,0,0,0,51.5,0h0A36.42,36.42,0,0,0,140.38,119.5Z"/><ellipse class="cls-1" cx="22.2" cy="71.96" rx="21.36" ry="31.57" transform="matrix(0.97, -0.26, 0.26, 0.97, -17.87, 8.2)"/><ellipse class="cls-1" cx="151.04" cy="71.96" rx="31.57" ry="21.36" transform="translate(42.44 199.23) rotate(-75)"/><ellipse class="cls-1" cx="63.26" cy="31.57" rx="21.36" ry="31.57"/><ellipse class="cls-1" cx="112.67" cy="31.57" rx="21.36" ry="31.57"/></g></g></svg>
+				<!-- Buttons -->
+				<div class="ml-6">
+					<!-- Notifications -->
+					<button class="mx-1 p-2 relative">
+						<!-- Bell Icon -->
+						<svg class="w-5 h-5 text-light-dark" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+						
+						<!-- Notification badge -->
+						<div class="absolute top-0 right-0 mt-1 mr-1 w-3 h-3 bg-red-500 rounded-full"></div>
+					</button>
+
+					<!-- Other Services -->
+					<button class="mx-1 p-2">
+						<!-- Grid Icon -->
+						<svg class="w-5 h-5 text-light-dark" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+					</button>
+				</div>
+			</div>
+		</div>
+		
+		<!-- Content -->
+		<div style="overflow: hidden; overflow-y: auto;" class="relative w-full flex-grow">
+			<div class="absolute inset-0 w-full h-full">
+				<slot></slot>
+
+				<!-- Footer -->
+				<footer class="w-full mt-16 flex flex-col justify-center items-center opacity-50 pb-8">
+					<!-- Logotype -->
+					<img class="w-4 h-4" src="https://res.cloudinary.com/lococovu-cdn/image/upload/v1610810215/logotypes/pawcapsu-white-small.svg" alt="">
+				
+					<!-- Text -->
+					<p class="text-xs text-gray-100 mt-1">Developed by <a class="border-b border-dotted border-gray-100" href="https://unfull.ml">unfull team</a></p>
+				</footer>
+			</div>
+		</div>
 	</div>
-{ /if }
-
-<main class="relative" style="z-index: 1; font-family: 'Manrope', sans-serif;">
-	<slot></slot>
 </main>
