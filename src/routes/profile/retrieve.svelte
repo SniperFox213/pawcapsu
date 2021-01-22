@@ -10,7 +10,7 @@
   import { LoadProfile } from "../../actions/profile";
 
   // Importing components
-  import Icon from "../../../../lococovu-auth/src/components/Icon.svelte";
+  import { Icon } from "../../components";
 
   // Variables
 
