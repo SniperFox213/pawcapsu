@@ -63,7 +63,7 @@
 </script>
 
 <!-- Sidebar -->
-<sidebar class="{ collapsed ? "w-14 pl-8" : "w-1/6" } flex flex-col">
+<sidebar style="z-index: 1;" class="{ collapsed ? "w-20" : "w-1/6" } flex flex-col bg-dark">
   <!-- Logotype -->
   <div class="h-16 flex { collapsed ? "flex-col justify-center" : "justify-between pl-6 pr-3" } items-center w-full">
     { #if collapsed }
@@ -101,12 +101,19 @@
       <!-- Items -->
       <div in:fade class="relative">
         { #each category.list as link }
-          <div on:click={() => goto(link.href)} class="cursor-pointer w-full my-6 flex items-center { $page.path.includes(link.id) ? "" : "opacity-70" }">
+          <div on:click={() => goto(link.href)} class="cursor-pointer w-full my-6 flex items-center relative { $page.path.includes(link.id) ? "" : "opacity-70" }">
             <!-- Icon -->
             <div class="w-9 h-9 flex justify-center items-center rounded-lg { $page.path.includes(link.id) ? "bg-yellow-400" : "bg-light-dark" }">
               <Icon name="{ link.icon }" attrs={{ class: "w-4 h-4 text-white" }} />
             </div>
             
+            { #if link.blocked }
+              <div style="z-index: 2;" class="absolute inset-0 w-full h-full bg-black opacity-70 rounded-md"></div>
+              <div style="z-index: 3;" class="absolute inset-0 w-full h-full opacity-80 flex justify-center items-center">
+                <Icon name="lock" attrs={{ class: "w-4 h-4 text-white" }} />
+              </div>
+            { /if }
+
             { #if !collapsed }
               <!-- Text -->
               <p class="text-md { $page.path.includes(link.id) ? "text-white" : "text-light-dark" } font-medium ml-4">{ link.title }</p>

@@ -4,7 +4,10 @@
 	import axios from "axios";
 
 	// Importing components
-	import { ArtworkCard } from "../../components";
+	import { 
+		ArtworkCard,
+		Icon 
+	} from "../../components";
 
 	// Test Data
 	let testData = [];
@@ -47,50 +50,50 @@
 	});
 </script>
 
-<!-- Discover -->
+<!-- Discover
 <h2 class="text-3xl text-white font-bold mt-8 mb-6 px-8">Новости</h2>
 
 <div class="w-full flex px-8">
 	<div class="w-2/3 px-1">
 		<div style="padding-top: 50%;" class="w-full relative">
 			<div class="absolute inset-0 w-full h-full rounded-lg bg-indigo-400 flex p-8">
-				<!-- Text -->
+				#Text
 				<div class="w-2/3">
-					<!-- Badge -->
+					#Badge
 					<div class="rounded-full bg-black opacity-50 text-white text-xs px-3 py-1 w-min">
 						Статья
 					</div>
 
 					<h1 class="text-4xl my-4 text-white font-bold">How to do Basic Jumping and how to landing safely</h1>
 					
-					<!-- Author -->
+					#Author
 					<div class="w-full flex items-center opacity-70">
-						<!-- Avatar -->
+						#Avatar
 						<div style="" class="bg-red-500 w-11 h-11 rounded-full relative">
 
 						</div>
 
-						<!-- Text -->
+						#Text
 						<div class="ml-2">
-							<!-- Username -->
+							#Username
 							<h2 class="text-md text-white font-medium">Marsh Jameson</h2>
 
-							<!-- Post info -->
+							#Post info
 							<div class="flex items-center mt-1">
-								<!-- Post Views -->
+								#Post Views
 								<p class="text-white text-xs">54k просмотров</p>
 
-								<!-- Dot -->
+								#Dot
 								<div class="w-1 h-1 mx-2 bg-white rounded-full"></div>
 								
-								<!-- Post Time -->
+								#Post Time
 								<p class="text-white text-xs">2 недели назад</p>
 							</div>
 						</div>
 					</div>
 				</div>
 
-				<!-- Reading Time Badge -->
+				#Reading Time Badge
 				<div class="absolute bottom-0 right-0 p-3">
 					<div class="rounded-full bg-black opacity-50 text-white text-xs px-3 py-1">
 						7 минут
@@ -103,43 +106,43 @@
 	<div class="w-1/3 px-1">
 		<div style="padding-top: 101%;" class="w-full relative">
 			<div class="absolute inset-0 w-full h-full rounded-lg bg-yellow-400 p-8">
-				<!-- Text -->
+				#Text
 				<div class="w-4/5">
-					<!-- Badge -->
+					#Badge
 					<div class="rounded-full bg-black opacity-50 text-white text-xs px-3 py-1 w-min">
 						Статья
 					</div>
 
 					<h1 class="text-3xl my-4 text-white font-bold">Skateboard tips You need to know</h1>
 					
-					<!-- Author -->
+					#Author
 					<div class="w-full opacity-70">
-						<!-- Text -->
+						#Text
 						<div>
-							<!-- Username -->
+							#Username
 							<h2 class="text-md text-white font-medium">Marsh Jameson</h2>
 
-							<!-- Post info -->
+							#Post info
 							<div class="flex items-center mt-1">
-								<!-- Post Views -->
+								#Post Views
 								<p class="text-white text-xs">54k просмотров</p>
 
-								<!-- Dot -->
+								#Dot
 								<div class="w-1 h-1 mx-2 bg-white rounded-full"></div>
 								
-								<!-- Post Time -->
+								#Post Time
 								<p class="text-white text-xs">2 недели назад</p>
 							</div>
 						</div>
 						
-						<!-- Avatar -->
+						#Avatar
 						<div style="" class="mt-2 bg-red-500 w-11 h-11 rounded-full relative">
 
 						</div>
 					</div>
 				</div>
 
-				<!-- Reading Time Badge -->
+				#Reading Time Badge
 				<div class="absolute bottom-0 right-0 p-3">
 					<div class="rounded-full bg-black opacity-50 text-white text-xs px-3 py-1">
 						7 минут
@@ -148,20 +151,191 @@
 			</div>
 		</div>
 	</div>
-</div>
+</div> -->
 
-<!-- Provider: furrynetwork -->
-<div class="flex items-center mt-8 mb-6 px-8">
+<!-- <div class="flex items-center mt-8 mb-6 px-8">
 	<h2 class="text-3xl text-white font-bold">Исследовать</h2>
 
-	<!-- FurryNetwork badge -->
+	#FurryNetwork badge
 	<div class="px-4 py-2 flex items-center justify-center bg-light-dark ml-2 rounded-md">
 		<h1 class="text-md text-white font-bold uppercase">furry</h1>
 		<h1 class="text-md text-indigo-400 font-medium uppercase">network</h1>
 	</div>
+</div> -->
+
+<!-- Fast Actions -->
+<div style="overflow: hidden;" class="w-full flex items-stretch relative mt-4 mb-6 px-6">
+	
+	<!-- Create new Post -->
+	<div class="mx-2 w-1/6 px-4 flex items-center rounded-md bg-light-dark p-2">
+		<!-- Icon -->
+		<div class="w-1/6">
+			<div style="padding-top: 100%" class="w-full relative">
+				<div class="absolute inset-0 w-full h-full rounded-md flex justify-center items-center bg-green-500">
+					<Icon name="feather" attrs={{ class: "text-white w-2/3" }} />
+				</div>
+			</div>
+		</div>
+
+		<!-- Text -->
+		<div class="pl-3 w-5/6">
+			<h1 class="text-sm text-white font-medium">Написать пост</h1>
+		</div>
+	</div>
+
+	<!-- Divider -->
+	<div style="width: 2px;" class="mx-2 h-12 rounded-md bg-light-dark opacity-50"></div>
+
+	<!-- Some other filters -->
+
+	<!-- All -->
+	<div class="mx-2 w-1/6 px-4 flex items-center rounded-md bg-light-dark p-2">
+		<!-- Icon -->
+		<div class="w-1/6">
+			<div style="padding-top: 100%" class="w-full relative">
+				<div class="absolute inset-0 w-full h-full rounded-md flex items-center justify-center bg-pink-500">
+					<Icon name="at-sign" attrs={{ class: "w-2/3 text-white" }} />
+				</div>
+			</div>
+		</div>
+
+		<!-- Text -->
+		<div class="pl-3 w-5/6">
+			<h1 class="text-sm text-white font-medium">Всё вместе</h1>
+		</div>
+	</div>
+
+	<!-- Image -->
+	<div class="mx-2 w-1/6 px-4 flex items-center rounded-md bg-yellow-400 p-2">
+		<!-- Icon -->
+		<div class="w-1/6">
+			<div style="padding-top: 100%" class="w-full relative">
+				<div class="absolute inset-0 w-full h-full bg-white rounded-md flex justify-center items-center">
+					<!-- Icon itself -->
+					<Icon name="image" attrs={{ class: "text-yellow-400 w-2/3" }} />
+				</div>
+			</div>
+		</div>
+
+		<!-- Text -->
+		<div class="pl-3 w-5/6">
+			<h1 class="text-sm text-white font-medium">Рисунки</h1>
+			<p class="text-xs text-white opacity-75">Выбранно</p>
+		</div>
+	</div>
+
+	<!-- Text -->
+	<div class="mx-2 w-1/6 px-4 flex items-center rounded-md bg-light-dark p-2">
+		<!-- Icon -->
+		<div class="w-1/6">
+			<div style="padding-top: 100%" class="w-full relative">
+				<div class="absolute inset-0 w-full h-full bg-indigo-400 rounded-md flex justify-center items-center">
+					<!-- Icon itself -->
+					<Icon name="type" attrs={{ class: "text-white w-2/3" }} />
+				</div>
+			</div>
+		</div>
+
+		<!-- Text -->
+		<div class="pl-3 w-5/6">
+			<h1 class="text-sm text-white font-medium">Рассказы</h1>
+		</div>
+	</div>
+
+	<!-- Other -->
+	<div class="mx-2 w-1/6 px-4 flex items-center rounded-md bg-light-dark p-2">
+		<!-- Icon -->
+		<div class="w-1/6">
+			<div style="padding-top: 100%" class="w-full relative">
+				<div class="absolute inset-0 w-full h-full bg-dark rounded-md flex justify-center items-center">
+					<!-- Icon itself -->
+					<Icon name="more-horizontal" attrs={{ class: "text-white w-2/3" }} />
+				</div>
+			</div>
+		</div>
+
+		<!-- Text -->
+		<div class="pl-3 w-5/6">
+			<h1 class="text-sm text-white font-medium">Другие фильтры</h1>
+		</div>
+	</div>
+
 </div>
 
 <div class="w-full flex flex-wrap items-center px-6">
+	<!-- Notifications Card -->
+	<div class="w-1/3 relative p-2">
+		<div style="padding-top: 120%" class="w-full relative">
+			<div class="absolute inset-0 w-full h-full bg-light-dark rounded-lg flex flex-col justify-center items-center p-4">
+				<div>
+					
+					<!-- Title + Description -->
+					<div class="flex items-center">
+						<!-- Sticker -->
+						<img class="w-1/6" src="./icons/smirking-face.png" alt="">
+						
+						<h1 class="text-3xl text-white font-bold ml-2">Давайте узнаем друг друга поближе</h1>
+					</div>
+					
+					<p class="text-md text-gray-100 opacity-95 mt-1">Лучше познакомиться сейчас чем потом! Мы быстренько расскажем и покажем то, что мы умеем.</p>
+				</div>
+				
+				<p class="text-xs my-2 text-white opacity-60">Стикеры не наши. У нас нет денег на стикеры. Вообще денег нет. Вот автор стикеров: <a href="https://www.furaffinity.net/user/toyapup" class="border-b border-gray-100 border-dotted">Toyapup</a></p>
+
+				<div style="overflow: hidden; overflow-y: auto;" class="mt-6 flex-grow w-full relative">
+					<div class="absolute inset-0 w-full h-full">
+
+						<!-- List -->
+						<div class="w-full rounded-md bg-dark h-20 flex items-center p-4">
+							<!-- Icon -->
+							<div class="w-1/6 relative">
+								<div style="padding-top: 100%;" class="w-full relative">
+									<div class="absolute inset-0 w-full h-full rounded-md flex justify-center items-center bg-white">
+										<!-- Icon itself -->
+										<img class="w-full" src="./stickers/0/18.png" alt="">
+									</div>
+								</div>
+							</div>
+
+							<!-- Texts -->
+							<div class="pl-3 w-4/6">
+								<h1 class="text-md text-white font-medium">Настройка аккаунта</h1>
+								<p class="text-xs text-gray-100 opacity-65">Настройте свой аккаунт так, как вам нравится.</p>
+							</div>
+
+							<!-- Progress Spinner -->
+							<div class="w-1/6 h-full flex justify-center items-center relative">
+								
+								<div style="border-color: #5A5861; border-top-color: rgba(252, 211, 77);	" class="w-2/3 h-2/3 rounded-full border-4"></div>
+							
+							</div>
+						</div>
+
+						<!-- Main Tutorial -->
+						<div class="w-full mt-4 rounded-md bg-dark h-20 flex items-center p-4">
+							<!-- Icon -->
+							<div class="w-1/6 relative">
+								<div style="padding-top: 100%;" class="w-full relative">
+									<div class="absolute inset-0 w-full h-full rounded-md flex items-center justify-center bg-white">
+										<!-- Icon itself -->
+										<img class="w-full" src="./stickers/0/17.png" alt="">
+									</div>
+								</div>
+							</div>
+
+							<!-- Texts -->
+							<div class="pl-3 w-5/6">
+								<h1 class="text-md text-white font-medium">Начальный туториал</h1>
+								<p class="text-xs text-gray-100 opacity-65">Узнайте про то, как работает этот сайт и зачем он вообще был создан.</p>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
 	{ #each testData as entry }
 		<ArtworkCard size="md" entry={entry} />
 	{ /each }

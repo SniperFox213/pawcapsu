@@ -17,6 +17,7 @@
   {
     "id": "chats",
     "href": "/chats",
+    "blocked": true,
     "category": "services",
     "icon": "message-circle",
     "title": "Чаты"
@@ -24,8 +25,16 @@
   {
     "id": "bookmarks",
     "href": "/profile/bookmarks",
+    "blocked": true,
     "category": "services",
     "icon": "bookmark",
     "title": "Закладки"
+  },
+  {
+    "id": "apps",
+    "href": "/apps",
+    "category": "apps",
+    "icon": "airplay",
+    "title": "Приложения"
   }
 ]

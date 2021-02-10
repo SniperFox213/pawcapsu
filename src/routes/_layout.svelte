@@ -1,6 +1,11 @@
 <script>
+	// Importing stores
+	import { stores } from "@sapper/app";
+	const { page } = stores();
+
 	// Importing components
 	import { Sidebar } from "../components";
+	import Icon from "../components/Icon.svelte";
 </script>
 
 <!-- Main -->
@@ -8,7 +13,7 @@
 	<Sidebar />
 
 	<!-- Container -->
-	<div class="w-full relative flex flex-col">
+	<div style="z-index: 0;" class="w-full relative flex flex-col">
 		<!-- Header -->
 		<div class="w-full flex justify-between items-center h-16 px-8">
 			<!-- Search -->
@@ -43,6 +48,17 @@
 						<!-- Grid Icon -->
 						<svg class="w-5 h-5 text-light-dark" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
 					</button>
+
+					<!-- Explore-related buttons -->
+					{ #if $page.path.includes("explore") }
+						<!-- Settings -->
+						<button class="mx-1 p-2 relative">
+							<!-- Grid Icon -->
+							<Icon name="settings" attrs={{ class: "w-5 h-5 text-light-dark" }} />
+						
+							<div class="absolute top-0 right-0 mt-1 mr-1 w-3 h-3 bg-red-500 rounded-full"></div>
+						</button>
+					{ /if }
 				</div>
 			</div>
 		</div>
@@ -53,13 +69,13 @@
 				<slot></slot>
 
 				<!-- Footer -->
-				<footer class="w-full mt-16 flex flex-col justify-center items-center opacity-50 pb-8">
-					<!-- Logotype -->
+				<!-- <footer class="w-full mt-16 flex flex-col justify-center items-center opacity-50 pb-8">
+					#Logotype
 					<img class="w-4 h-4" src="https://res.cloudinary.com/lococovu-cdn/image/upload/v1610810215/logotypes/pawcapsu-white-small.svg" alt="">
 				
-					<!-- Text -->
+					#Text
 					<p class="text-xs text-gray-100 mt-1">Developed by <a class="border-b border-dotted border-gray-100" href="https://unfull.ml">unfull team</a></p>
-				</footer>
+				</footer> -->
 			</div>
 		</div>
 	</div>

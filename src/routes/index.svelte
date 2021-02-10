@@ -45,20 +45,14 @@
 				return obj;
 			});
 
-      setTimeout(() => {
-        let scroll = 0;
-        let element = document.getElementById("content-container");
-        let lastElement = element.lastElementChild;
+      let scroll = 0;
+      let element = document.getElementById("content-container");
 
-        setInterval(() => {
-          element.scroll(0, scroll);
-          scroll += 0.15;
+      setInterval(() => {
+        element.scroll(0, scroll);
+        scroll += 0.15;
 
-          if (scroll >= lastElement.offsetTop - 300) {
-            scroll = 0;
-          };
-        }, 5);
-      }, 5000);
+      }, 5);
 		});
 	});
 </script>
