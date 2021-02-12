@@ -16,8 +16,13 @@
 	<div style="z-index: 0;" class="w-full relative flex flex-col">
 		<!-- Header -->
 		<div class="w-full flex justify-between items-center h-16 px-8">
+			<!-- Pawcapsu Logotype (mobile) -->
+			<div class="w-1/6 md:hidden flex items-center">
+				<img class="w-7 h-7" src="https://res.cloudinary.com/lococovu-cdn/image/upload/v1610810215/logotypes/pawcapsu-white-small.svg" alt="pawcapsu logotype">
+			</div>
+
 			<!-- Search -->
-			<div class="w-2/3 rounded-md py-2 px-4 bg-light-dark flex items-center justify-between">
+			<div class="w-full md:w-2/3 rounded-md py-2 mx-4 md:mx-0 px-4 bg-light-dark flex items-center justify-between">
 				<input class="flex-grow bg-light-dark text-white" placeholder="Search" type="text">
 
 				<!-- Icon -->
@@ -25,15 +30,15 @@
 			</div>
 
 			<!-- Account -->
-			<div class="w-1/3 flex justify-end items-center">
+			<div class="w-1/6 md:w-1/3 flex justify-end items-center">
 				<!-- Avatar -->
-				<div class="w-8 h-8 rounded-full bg-red-400"></div>
+				<div class="w-7 md:w-8 h-7 md:h-8 rounded-full bg-red-400"></div>
 
 				<!-- Name -->
-				<h2 class="text-md text-white font-medium ml-2">Marsh Jameson</h2>
+				<h2 class="hidden md:block text-md text-white font-medium ml-2">Marsh Jameson</h2>
 
 				<!-- Buttons -->
-				<div class="ml-6">
+				<div class="ml-6 hidden md:flex items-center">
 					<!-- Notifications -->
 					<button class="mx-1 p-2 relative">
 						<!-- Bell Icon -->

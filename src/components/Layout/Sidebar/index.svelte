@@ -63,7 +63,7 @@
 </script>
 
 <!-- Sidebar -->
-<sidebar style="z-index: 1;" class="{ collapsed ? "w-20" : "w-1/6" } flex flex-col bg-dark">
+<sidebar style="z-index: 1;" class="{ collapsed ? "w-20" : "w-1/6" } hidden md:flex flex-col bg-dark">
   <!-- Logotype -->
   <div class="h-16 flex { collapsed ? "flex-col justify-center" : "justify-between pl-6 pr-3" } items-center w-full">
     { #if collapsed }
@@ -84,7 +84,7 @@
   </div>
 
   <!-- Links -->
-  <div class="{ collapsed ? "flex flex-col items-center" : "px-6" } flex-grow w-full mt-8">
+  <div class="{ collapsed ? "hidden md:flex flex-col items-center" : "px-6" } flex-grow w-full mt-8">
     <!-- Current Profile -->
     { #if $page.path.includes('profile') }
       <div class="{ collapsed ? "mt-2" : "mb-8" }">

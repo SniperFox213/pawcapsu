@@ -1,15 +1,21 @@
 <script>
   // Importing modules
-  import { afterUpdate } from "svelte";
+  import { afterUpdate, createEventDispatcher } from "svelte";
   import moment from "moment";
 
   import { fade } from "svelte/transition";
   import { goto } from "@sapper/app";
 
+  const dispatch = createEventDispatcher();
+
   // Importing components
   import { Icon } from "../../";
 
   // Variables
+
+  // @variable hover
+  // - Hover state of this card
+  let hover = false;
 
   // @variable profileIconHover
   let profileIconHover = false;
@@ -30,6 +36,18 @@
   // client to this profile account
   function openProfile() {
     goto(`/profile/retrieve?provider=${ entry.provider || "internal" }&identifier=${entry.author.nickname}`);
+  };
+
+  // Function, that'll open this post for
+  // this user
+  function openPost() {
+    // Firstly we need to send event to our browser component
+    // (or whatever component we have as parent component)
+    dispatch("open", entry);
+
+    // And now we need to change our current url
+    // url.searchParams.set('foo', 'bar');
+    window.history.pushState({}, "", `/post/${entry.id}`);
   };
 
   // After Update
@@ -72,7 +90,7 @@
           textSize: "sm"
         };
         break;
-    }
+    };
   });
 
   // Exporting variables
@@ -97,15 +115,31 @@
   export let hideContent = false;
 </script>
 
+<style>
+  .image {
+    background-position: center; 
+    background-size: cover;
+  }
+</style>
+
 <!-- ContentCard layout -->
-<div in:fade class="w-{ sizes.width } relative p-2">
+<div in:fade class="w-full md:w-{ sizes.width } relative p-2">
   <div style="padding-top: 120%" class="w-full relative">
-    <div class="absolute inset-0 w-full h-full bg-light-dark rounded-lg flex flex-col">
+    <div on:click={() => openPost()} on:mouseenter={() => hover = true} on:mouseleave={() => hover = false} class="absolute cursor-pointer inset-0 w-full h-full bg-light-dark rounded-lg flex flex-col">
+      <!-- Tooltip -->
+      { #if hover }
+        <div style="z-index: 2;" class="absolute inset-0 w-full top-0 p-2 flex justify-start">
+          <div transition:fade class="transition duration-200 ease-in-out h-8 bg-dark px-3 opacity-40 rounded-full flex items-center">
+            <p class="text-xs text-white">Нажмите, что бы открыть</p>
+          </div>
+        </div>
+      { /if }
+      
       { #if entry.source.nsfw }
         <!-- Image itself -->
         <div style="z-index: 0; overflow: hidden;" class="rounded-t-md h-{ sizes.imageHeight } w-full relative">
           <!-- Image -->
-          <div style="z-index: 1; filter: blur(5px); background: url('{ entry.source.image }'); background-position: center; background-size: cover;" class="absolute inset-0"></div>
+          <div style="z-index: 1; filter: blur(5px); background: url('{ entry.source.image }');" class="absolute inset-0"></div>
 
           <div style="z-index: 2;" class="absolute inset-0 w-full h-full bg-dark opacity-95 rounded-t-md flex justify-center items-center">
             <!-- Badge -->
@@ -116,13 +150,13 @@
         </div>
       { :else }
         <!-- Image itself -->
-        <div style="background: url('{ entry.source.image }'); background-position: center; background-size: cover;" class="rounded-t-md h-{ sizes.imageHeight } w-full relative">
+        <div style="background-size: cover; background-position: center; background-image: url('{ entry.source.image }');" class="rounded-t-md h-{ sizes.imageHeight } w-full relative">
           <div class="absolute inset-0 w-full h-full bg-dark opacity-30 rounded-t-md"></div>
         </div>
       { /if }
 
       <!-- Avatar + Badge -->
-      <div on:mouseenter={() => profileIconHover = true} on:mouseleave={() => profileIconHover = false} class="absolute top-0 right-0 p-2 opacity-80">
+      <div on:mouseenter={() => profileIconHover = true} on:mouseleave={() => profileIconHover = false} style="z-index: 3;" class="absolute top-0 right-0 p-2 opacity-80">
         <div class="transition duration-200 ease-in-out bg-dark { profileIconHover ? "pl-3" : "" } rounded-full flex items-center">
           { #if profileIconHover }
             <!-- User Name -->
@@ -135,7 +169,7 @@
           { /if }
           
           <!-- Avatar -->
-          <div style="background: url('{ entry.author.avatar }'); background-size: cover; background-position: center;" class="w-8 h-8 rounded-full"></div>
+          <div style="background-image: url('{ entry.author.avatar }'); background-size: cover; background-position: center;" class="w-8 h-8 rounded-full"></div>
         </div>
       </div>
 
