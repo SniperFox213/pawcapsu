@@ -6,15 +6,39 @@
 
   moment.locale("ru");
 
+  // Importing stores
+  import cache from "../../../stores/cache.js";
+
   // Importing components
   import {
     ArtworkCard,
-    PostContent
+    PostContent,
+    Icon
   } from "../../index.js";
 
   // Fetching data
 	async function fetchData() {
-    if (!loading) { 
+    if (!loading) {
+      let element = document.getElementById("list");
+
+      // Let's firstly check if we have any cached data
+      if ($cache["browser"]) {
+        if (!loadedCache) {
+          loadedCache = true;
+          // Let's now load some information from cache
+          data = $cache.browser;
+
+          if (data.length > 0) {
+            loadedFromStorage = true;
+          };
+
+          setTimeout(() => {
+            element.scroll({ top: $cache["browser/scroll"], behavior: 'smooth' });
+          }, 150);
+          return;
+        };
+      };
+
       loading = true;
       let after = null;
 
@@ -31,14 +55,38 @@
       // Saving last element as last element
       last = newBatch[newBatch.length - 1];
       loading = false;
+
+      // And now let's cache this data
+      cache.setCache("browser", [...data, ...newBatch]);
+      loadedCache = true;
     };
 	};
+
+  // Function to update browser
+  function updateBrowser() {
+    // Clearing store
+    cache.setCache("browser", []);
+    cache.setCache("browser/scroll", 0);
+
+    // Clearing data
+    data = [];
+    newBatch = [];
+    
+    // Scrolling to top
+    let element = document.getElementById("list");
+    element.scrollTop = 0;
+    
+    loadedFromStorage = false;
+    fetchData();
+  };
 
   // Infinite scroller settings
   let last;
   let loading = false;
   let size = 14;
   
+  let loadedFromStorage = false;
+  let loadedCache = false;
   let data = [];
   let newBatch = [];
 
@@ -49,6 +97,9 @@
     let element = document.getElementById("list");
 
     element.addEventListener("scroll", () => {
+      // Saving scroll position
+      cache.setCache("browser/scroll", element.scrollTop);
+      
       if (element.scrollTop + element.clientHeight >= element.scrollHeight - 200) {
         fetchData();
       };
@@ -184,3 +235,49 @@
     </div>
   { /if }
 </div>
+
+<!-- "Notification"
+TODO: recode -->
+{ #if loadedFromStorage }
+  <div style="z-index: 999;" class="absolute w-full flex justify-end bottom-0 right-0">
+    { #if $cache.hidLoadedFromStorageNotification }
+      <button on:click={(e) => {
+        updateBrowser();
+      }} class="w-7 h-7 rounded-full bg-indigo-400 flex justify-center items-center m-3">
+        <Icon name="refresh-cw" attrs={{ class: "w-4 h-4 text-white" }} />
+      </button>
+    { :else }
+        <div class="w-1/3 rounded-md p-4 bg-light-dark flex items-center m-3 shadow-md">
+          <!-- Image -->
+          <img class="w-14" src="./stickers/0/10.png" alt="">
+
+          <!-- Content -->
+          <div class="ml-3">
+            <div>
+              <!-- Title -->
+              <h1 class="text-2xl text-white font-medium">Хоба!</h1>
+
+              <!-- Descriptin -->
+              <p class="text-xs text-gray-100 opacity-75">Мы восстановили вашу прошлую сессию. Круто, да? Продолжайте от туда, от куда закончили!</p>
+            </div>
+
+            <!-- Buttons -->
+            <div class="mt-2 w-full flex items-center justify-center">
+              <button on:click={(e) => {
+                updateBrowser();
+              }} class="flex w-1/2 items-center justify-center py-1 rounded-md bg-indigo-400">
+                <p class="text-xs text-white font-medium">Обновить страничку</p>
+              </button>
+
+              <button on:click={(e) => {
+                loadedFromStorage = false;
+                cache.setCache("hidLoadedFromStorageNotification", true);
+              }} class="flex opacity-80 ml-3 w-1/2 items-center justify-center py-1 rounded-md bg-indigo-400">
+                <p class="text-xs text-white font-medium">Скрыть</p>
+              </button>
+            </div>
+          </div>
+        </div>
+    { /if }
+  </div>
+{ /if }

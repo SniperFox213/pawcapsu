@@ -1,11 +1,30 @@
 <script>
+	// Importing modules
+	import { onMount } from "svelte";
+
 	// Importing stores
 	import { stores } from "@sapper/app";
 	const { page } = stores();
 
+	import cache from "../stores/cache.js";
+
 	// Importing components
-	import { Sidebar } from "../components";
-	import Icon from "../components/Icon.svelte";
+	import { 
+		Sidebar, 
+		Icon 
+	} from "../components";
+
+	let loaded = false;
+
+	// onMount event
+	onMount(() => {
+		cache.initializeCache()
+		.then((response) => {
+			setTimeout(() => {
+				loaded = true;
+			}, 250);
+		});
+	});
 </script>
 
 <!-- Main -->
@@ -69,19 +88,21 @@
 		</div>
 		
 		<!-- Content -->
-		<div style="overflow: hidden; overflow-y: auto;" class="relative w-full flex-grow">
-			<div class="absolute inset-0 w-full h-full">
-				<slot></slot>
+		{ #if loaded }
+			<div style="overflow: hidden; overflow-y: auto;" class="relative w-full flex-grow">
+				<div class="absolute inset-0 w-full h-full">
+					<slot></slot>
 
-				<!-- Footer -->
-				<!-- <footer class="w-full mt-16 flex flex-col justify-center items-center opacity-50 pb-8">
-					#Logotype
-					<img class="w-4 h-4" src="https://res.cloudinary.com/lococovu-cdn/image/upload/v1610810215/logotypes/pawcapsu-white-small.svg" alt="">
-				
-					#Text
-					<p class="text-xs text-gray-100 mt-1">Developed by <a class="border-b border-dotted border-gray-100" href="https://unfull.ml">unfull team</a></p>
-				</footer> -->
+					<!-- Footer -->
+					<!-- <footer class="w-full mt-16 flex flex-col justify-center items-center opacity-50 pb-8">
+						#Logotype
+						<img class="w-4 h-4" src="https://res.cloudinary.com/lococovu-cdn/image/upload/v1610810215/logotypes/pawcapsu-white-small.svg" alt="">
+					
+						#Text
+						<p class="text-xs text-gray-100 mt-1">Developed by <a class="border-b border-dotted border-gray-100" href="https://unfull.ml">unfull team</a></p>
+					</footer> -->
+				</div>
 			</div>
-		</div>
+		{ /if }
 	</div>
 </main>
