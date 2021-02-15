@@ -10,11 +10,9 @@
   import cache from "../../../stores/cache.js";
 
   // Importing components
-  import {
-    ArtworkCard,
-    PostContent,
-    Icon
-  } from "../../index.js";
+  import ArtworkCard from "../Types/Artwork.svelte";
+  import PostContent from "../Post/index.svelte";
+  import Icon from "../../Icon.svelte";
 
   // Fetching data
 	async function fetchData() {

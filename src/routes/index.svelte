@@ -87,8 +87,34 @@
     <div style="z-index: 2;" class="absolute inset-0 w-full h-full"></div>
     <div style="overflow: hidden; z-index: 1; width: 125%; right: 5vw;" id="content-container" class="transform -skew-y-12 rotate-12 flex flex-wrap absolute inset-0 h-full rounded-md bg-dark">
       { #each testData as entry }
-        <ArtworkCard size="sm" hideContent={true} entry={entry} />
+        <ArtworkCard size="md" hideContent={true} entry={entry} />
       { /each }  
+    </div>
+  </div>
+</section>
+
+<!-- Features section -->
+<section class="w-full h-screen flex justify-center items-center px-8">
+  <!-- Texts -->
+  <div class="w-1/2 px-3">
+    <!-- Badge -->
+    <div class="flex">
+      <div class="rounded-full mb-1 px-2 py-1 text-xs text-white bg-indigo-400 opacity-70">
+        Специальный функционал
+      </div>
+    </div>
+
+    <h1 class="text-5xl text-gray-100 font-bold">Полная синхронизация</h1>
+    <p class="mt-2 text-md text-gray-100 opacity-75">Читали какой-то рассказ на компьютере но потом резко перешли на телефон? Не беспокойтесь - просто отройте приложение и продолжайте делать то, что вы делали на компьютере!<br /><br /><span class="text-xs opacity-70"><span class="px-2 py-0.5 rounded-full text-xs mr-1 bg-red-500 text-white opacity-50">Внимание!</span>Для того, что бы синхронизация вообще работала, вам нужно будет авторизоваться под одним аккаунтом. Тоесть вам нужно будет перейти в Настройки аккаунта -> Привязка и привязать ваш текущий аккаунт к аккаунту Google, VK ну или же к аккаунту Discord.</span></p>
+  </div>
+
+  <!-- Content -->
+  <div class="w-1/2 h-full flex justify-center items-center relative px-3">
+    <!-- Mobile -->
+    <div class="px-4 w-2/3 h-full flex items-center">
+      <div class="w-full h-2/3 rounded-md bg-light-dark">
+        s
+      </div>
     </div>
   </div>
 </section>

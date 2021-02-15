@@ -1,5 +1,6 @@
 // Importing and then exporting all modules
 // and actions
-import LoadProfile from "./LoadProfile.js";
+import loadProfile from "./loadProfile.js";
+import createProfile from "./createProfile.js";
 
-export { LoadProfile };
+export { loadProfile, createProfile };

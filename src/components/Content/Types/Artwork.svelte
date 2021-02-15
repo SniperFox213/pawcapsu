@@ -9,7 +9,7 @@
   const dispatch = createEventDispatcher();
 
   // Importing components
-  import { Icon } from "../../";
+  import Icon from "../../Icon.svelte";
 
   // Variables
 

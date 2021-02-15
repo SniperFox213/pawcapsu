@@ -3,10 +3,7 @@
   import { onMount } from "svelte";
 
   // Importing components
-  import {
-    Icon
-  } from "../../index.js";
-
+  import Icon from "../../Icon.svelte";
   // Exporting some variables
 
   // @export id

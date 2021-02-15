@@ -7,7 +7,7 @@
   const { page } = stores();
 
   // Importing actions
-  import { LoadProfile } from "../../actions/profile";
+  import { loadProfile } from "../../actions/profile";
 
   // Importing components
   import { Icon } from "../../components";
@@ -23,7 +23,7 @@
   // promise to our server
   // and wait.
   onMount(() => {
-    LoadProfile($page.query.identifier, $page.query.provider)
+    loadProfile($page.query.identifier, $page.query.provider)
     .then((response) => {
       goto(`/profile/${$page.query.identifier}`);
     }).catch((error) => {
