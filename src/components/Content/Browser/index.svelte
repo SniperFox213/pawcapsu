@@ -43,8 +43,8 @@
       let after = null;
 
       // Checking if we need to fetch new data
-      if (last != null && last.ref["@ref"].id != null) {
-        after = last.ref["@ref"].id;
+      if (last != null && last._id != null) {
+        after = last._id;
       };
 
       const response = await fetch(`https://v1.api.paw.unfull.ml/api/explore/popular?size=${size}${ after != null ? `&after=${after}` : "" }`);
@@ -129,21 +129,26 @@
 
 { #if currentPost.show }
 
-  <div style="z-index: 999;" class="absolute inset-0 w-full h-full">
+  <div style="z-index: 999;" class="absolute inset-0 flex flex-col justify-end w-full h-full">
     <div on:click={(e) => {
       currentPost.show = false;
 
       // Updating history state back to normal
       window.history.pushState({}, "", `/explore`);
-    }} class="w-full h-1/4 bg-dark opacity-75"></div>
+    }} class="w-full h-8 bg-dark opacity-75"></div>
 
-    <div style="overflow: hidden; overflow-y: auto;" class="relative w-full h-3/4 bg-light-dark rounded-t-md">
+    <div style="overflow: hidden; overflow-y: auto;" class="relative w-full h-full bg-light-dark rounded-t-md p-6">
+      <!-- Close Button -->
+      <button on:click={(e) => {
+        currentPost.show = false;
+
+        // Updating history state back to normal
+        window.history.pushState({}, "", `/explore`);
+      }} style="z-index: 999;" class="absolute top-0 right-0 p-6 rounded-md">
+        <Icon name="x" attrs={{ class: "text-white w-5 h-5" }} />
+      </button>
+      
       <PostContent id={currentPost.id} post={currentPost} />
-
-      <!-- :after -->
-      <div class="w-full h-1/6 flex justify-center items-center">
-        <p class="text-xs text-gray-100 opacity-60 text-center">Данный контент был взят с сайта <span class="border-b border-dotted border-gray-100">FurryNetwork</span><br/> Дата взятия данного контента с сайта: <span class="border-b border-dotted border-gray-100">{ moment.unix(currentPost.scrapped).calendar() }</span> <br /><br />Мы не несём отвественности за данный контент.</p>
-      </div>
     </div>
   </div>
 
@@ -239,7 +244,7 @@
 <!-- "Notification"
 TODO: recode -->
 { #if loadedFromStorage }
-  <div style="z-index: 999;" class="absolute w-full flex justify-end bottom-0 right-0">
+  <div style="z-index: 998;" class="absolute w-full flex justify-end bottom-0 right-0">
     { #if $cache.hidLoadedFromStorageNotification }
       <button on:click={(e) => {
         updateBrowser();
@@ -249,7 +254,7 @@ TODO: recode -->
     { :else }
         <div class="w-1/3 rounded-md p-4 bg-light-dark flex items-center m-3 shadow-md">
           <!-- Image -->
-          <img class="w-14" src="./stickers/0/10.png" alt="">
+          <img class="w-14" src="./stickers/0/20.png" alt="">
 
           <!-- Content -->
           <div class="ml-3">
