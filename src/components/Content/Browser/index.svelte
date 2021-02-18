@@ -180,7 +180,7 @@
 
 { /if }
 
-<div class="w-full h-full flex flex-wrap items-center px-6">
+<div class="w-full h-full flex flex-wrap items-center md:px-6">
   { #if !readyToShow }
     <div style="z-index: 999;" out:fade class="bg-dark absolute inset-0 w-full h-full flex justify-center items-center">
       <Spinner />
@@ -228,7 +228,7 @@
 							</div>
 
 							<!-- Progress Spinner -->
-							<div class="w-1/6 h-full flex justify-center items-center relative">
+							<div class="w-12 h-12 h-full flex justify-center items-center relative">
 								
 								<div style="border-color: #5A5861; border-top-color: rgba(252, 211, 77);	" class="w-2/3 h-2/3 rounded-full border-4"></div>
 							
@@ -270,7 +270,7 @@
   { /each }
 
   { #if loading }
-    <div class="w-full py-16 flex flex-col justify-center items-center">
+    <div class="w-full py-16 flex flex-col justify-center items-center px-6 md:px-0 text-center">
       <h1 class="text-2xl text-white font-bold">Загружаем ещё...</h1>
       <p class="text-xs text-gray-100 opacity-50 mt-1">Вы можете изменить кол-во показываемых постов. Просто нажмите на шестерёнки сверху!</p>
     </div>
@@ -288,9 +288,9 @@ TODO: recode -->
         <Icon name="refresh-cw" attrs={{ class: "w-4 h-4 text-white" }} />
       </button>
     { :else }
-        <div class="w-full md:w-1/3 rounded-md p-4 bg-light-dark flex items-center m-3 shadow-md">
+        <div class="w-full md:w-1/3 rounded-md p-4 bg-indigo-400 flex items-center m-3 shadow-md">
           <!-- Image -->
-          <img class="w-14" src="./stickers/0/20.png" alt="">
+          <img class="w-16 md:w-14" src="./stickers/0/20.png" alt="">
 
           <!-- Content -->
           <div class="ml-3">
@@ -306,14 +306,14 @@ TODO: recode -->
             <div class="mt-2 w-full flex items-center justify-center">
               <button on:click={(e) => {
                 updateBrowser();
-              }} class="flex w-1/2 items-center justify-center py-1 rounded-md bg-indigo-400">
+              }} class="flex w-1/2 items-center justify-center py-1 rounded-md bg-dark">
                 <p class="text-xs text-white font-medium">Обновить страничку</p>
               </button>
 
               <button on:click={(e) => {
                 loadedFromStorage = false;
                 cache.setCache("hidLoadedFromStorageNotification", true);
-              }} class="flex opacity-80 ml-3 w-1/2 items-center justify-center py-1 rounded-md bg-indigo-400">
+              }} class="flex opacity-80 ml-3 w-1/2 items-center justify-center py-1 rounded-md bg-dark">
                 <p class="text-xs text-white font-medium">Скрыть</p>
               </button>
             </div>

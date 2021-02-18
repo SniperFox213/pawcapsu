@@ -50,6 +50,16 @@
 				background: "indigo-400",
 				icon: "type"
 			}
+		},
+		{
+			id: "audio",
+			types: "podcasts",
+			title: "Подкасты",
+
+			visual: {
+				background: "purple-400",
+				icon: "mic"
+			}
 		}
 	];
 
@@ -60,9 +70,9 @@
 <div style="overflow: hidden; overflow-y: auto;" id="list" class="w-full h-full">
 	<!-- Fast Actions -->
 	<div style="overflow: hidden; overflow-x: auto;" class="h-16 w-full relative mt-4 mb-6">
-		<div class="absolute inset-0 h-full px-4 md:px-6 flex items-stretch">
+		<div class="absolute inset-0 h-full md:px-6 flex items-stretch">
 			<!-- Create new Post -->
-			<div class="mx-4 md:mx-2 w-auto md:w-1/6 px-4 flex items-center rounded-md bg-light-dark p-2">
+			<div class="mx-2 md:mx-2 w-auto md:w-1/6 px-4 flex items-center rounded-md bg-light-dark p-2">
 				<!-- Icon -->
 				<div class="w-10 md:w-1/6">
 					<div style="padding-top: 100%" class="w-full relative">
