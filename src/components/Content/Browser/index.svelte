@@ -288,7 +288,7 @@ TODO: recode -->
         <Icon name="refresh-cw" attrs={{ class: "w-4 h-4 text-white" }} />
       </button>
     { :else }
-        <div class="w-1/3 rounded-md p-4 bg-light-dark flex items-center m-3 shadow-md">
+        <div class="w-full md:w-1/3 rounded-md p-4 bg-light-dark flex items-center m-3 shadow-md">
           <!-- Image -->
           <img class="w-14" src="./stickers/0/20.png" alt="">
 
