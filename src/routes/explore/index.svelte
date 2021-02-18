@@ -15,21 +15,8 @@
 			currentType = "all";
 			cache.setCache("browser.currentTypes", currentType);
 		} else {
-			if (typeof currentType == "object") {
-				if (currentType.includes(category)) {
-					if (currentType.length - 1 > 1) currentType = currentType.filter((x) => x != category);
-					cache.setCache("browser.currentTypes", currentType);
-				} else {
-					let newTypes = currentType;
-					newTypes.push(category);
-					currentType = newTypes;
-
-					cache.setCache("browser.currentTypes", currentType);
-				};
-			} else {
-				currentType = [currentType == "all" ? null : currentType, category];
-				cache.setCache("browser.currentTypes", currentType);
-			};
+			currentType = category;
+			cache.setCache("browser.currentTypes", currentType);
 		};
 	};
 
