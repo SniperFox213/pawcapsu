@@ -23,7 +23,11 @@
     "jdenticon": "^3.1.0",
     "local-storage": "^2.0.0",
     "moment": "^2.29.1",
-    "sirv": "^1.0.10"
+    "sirv": "^1.0.10",
+    "svelte-image": "^0.2.9",
+    "svelte-lazy-image": "0.0.3",
+    "svelte-popover": "^2.0.8",
+    "ua-parser-js": "^0.7.24"
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",

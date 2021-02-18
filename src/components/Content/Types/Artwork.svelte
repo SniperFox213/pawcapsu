@@ -10,6 +10,7 @@
 
   // Importing components
   import Icon from "../../Icon.svelte";
+  import Spinner from "../../Spinner.svelte";
 
   // Variables
 
@@ -115,13 +116,6 @@
   export let hideContent = false;
 </script>
 
-<style>
-  .image {
-    background-position: center; 
-    background-size: cover;
-  }
-</style>
-
 <!-- ContentCard layout -->
 <div in:fade class="w-full md:w-{ sizes.width } relative p-2">
   <div style="padding-top: 120%" class="w-full relative">
@@ -149,8 +143,15 @@
           </div>
         </div>
       { :else }
+        <!-- Loader -->
+        <div style="z-index: 1;" class="rounded-t-md h-{ sizes.imageHeight } w-full absolute flex justify-center items-center">
+          <!-- Spinner -->
+          <Spinner />
+        </div>
+
         <!-- Image itself -->
-        <div style="background-size: cover; background-position: center; background-image: url('{ entry.source.image }');" class="rounded-t-md h-{ sizes.imageHeight } w-full relative">
+        <div style="z-index: 2;" class="rounded-t-md h-{ sizes.imageHeight } w-full relative">
+          <img style="background-size: cover; background-position: center; background-image: url({ entry.source.image })" src="https://www.echr.com.ua/wp-content/uploads/2018/05/Empty.png" class="w-full h-full" alt="{ entry.source.title } by { entry.author.displayName }">
           <div class="absolute inset-0 w-full h-full bg-dark opacity-30 rounded-t-md"></div>
         </div>
       { /if }

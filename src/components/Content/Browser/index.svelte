@@ -1,6 +1,7 @@
 <script>
   // Importing modules
-  import { onMount } from "svelte";
+  import { fade } from "svelte/transition";
+  import { onMount, beforeUpdate } from "svelte";
   import moment from "moment";
   import "moment/locale/ru";
 
@@ -11,30 +12,41 @@
 
   // Importing components
   import ArtworkCard from "../Types/Artwork.svelte";
+  import WritingCard from "../Types/Writing.svelte";
+
   import PostContent from "../Post/index.svelte";
   import Icon from "../../Icon.svelte";
+  import Spinner from "../../Spinner.svelte";
 
   // Fetching data
-	async function fetchData() {
+	async function fetchData(forcedUpdate = false) {
     if (!loading) {
       let element = document.getElementById("list");
-
+      
       // Let's firstly check if we have any cached data
-      if ($cache["browser"]) {
+      if ($cache[`browser.${types}`] && !forcedUpdate) {
         if (!loadedCache) {
           loadedCache = true;
           // Let's now load some information from cache
-          data = $cache.browser;
+          data = $cache[`browser.${types}`];
 
           if (data.length > 0) {
             loadedFromStorage = true;
           };
 
           setTimeout(() => {
-            element.scroll({ top: $cache["browser/scroll"], behavior: 'smooth' });
+            element.scrollTop = $cache[`browser.${types}/scroll`];
+            
+            setTimeout(() => {
+              readyToShow = true;
+            }, 250);
           }, 150);
           return;
+        } else {
+          readyToShow = true;
         };
+      } else {
+        readyToShow = true;
       };
 
       loading = true;
@@ -45,7 +57,7 @@
         after = last._id;
       };
 
-      const response = await fetch(`https://v1.api.paw.unfull.ml/api/explore/popular?size=${size}${ after != null ? `&after=${after}` : "" }`);
+      const response = await fetch(`https://v1.api.paw.unfull.ml/api/explore/popular?size=${size}&type=${ typeof types == "object" ? types.join(",") : types }${ after != null ? `&after=${after}` : "" }`);
       newBatch = await response.json();
       
       if (last != null) newBatch.shift();
@@ -55,7 +67,7 @@
       loading = false;
 
       // And now let's cache this data
-      cache.setCache("browser", [...data, ...newBatch]);
+      cache.setCache(`browser.${types}`, [...data, ...newBatch]);
       loadedCache = true;
     };
 	};
@@ -81,6 +93,7 @@
   // Infinite scroller settings
   let last;
   let loading = false;
+  let readyToShow = false;
   let size = 14;
   
   let loadedFromStorage = false;
@@ -96,7 +109,7 @@
 
     element.addEventListener("scroll", () => {
       // Saving scroll position
-      cache.setCache("browser/scroll", element.scrollTop);
+      cache.setCache(`browser.${types}/scroll`, element.scrollTop);
       
       if (element.scrollTop + element.clientHeight >= element.scrollHeight - 200) {
         fetchData();
@@ -112,6 +125,16 @@
 
   let currentPost = {};
 
+  beforeUpdate(() => {
+    // Preparing types
+    if (oldTypes != types) {
+      oldTypes = types;
+
+      readyToShow = false;
+      updateBrowser();
+    };
+  });
+
   // Function, that'll handle post opens
   function openPost(e) {
     // Getting post information
@@ -123,6 +146,11 @@
     // TODO
     currentPost = data;
   };
+
+  // Let's now export different post types
+  export let types;
+
+  let oldTypes = types;
 </script>
 
 { #if currentPost.show }
@@ -153,6 +181,12 @@
 { /if }
 
 <div class="w-full h-full flex flex-wrap items-center px-6">
+  { #if !readyToShow }
+    <div style="z-index: 999;" out:fade class="bg-dark absolute inset-0 w-full h-full flex justify-center items-center">
+      <Spinner />
+    </div>
+  { /if }
+
   <!-- Notifications Card -->
 	<div class="w-full md:w-1/3 relative p-2">
 		<div style="padding-top: 120%" class="w-full relative">
@@ -228,7 +262,11 @@
 
   <!-- Layout -->
   { #each data as entry }
-    <ArtworkCard on:open={(e) => openPost(e)} size="md" entry={entry} />
+    { #if entry.type == "artwork" }
+      <ArtworkCard on:open={(e) => openPost(e)} size="md" entry={entry} />
+    { :else if entry.type == "text" }
+      <WritingCard on:open={(e) => openPost(e)} size="md" entry={entry} />
+    { /if }
   { /each }
 
   { #if loading }
