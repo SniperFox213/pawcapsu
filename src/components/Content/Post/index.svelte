@@ -17,7 +17,7 @@
 
 <div class="flex flex-col md:flex-row h-full relative">
   <!-- Image itself -->
-  <div class="h-full w-2/3 border-r border-gray-700 flex justify-center items-center relative">
+  <div class="h-full w-full md:w-2/3 border-b md:border-r border-gray-700 flex justify-center items-center relative">
     <img class="w-auto h-full rounded-md py-6 px-2" src="{ post.source.image }" alt="">
 
     <!-- Image manipulation Buttons -->
@@ -35,7 +35,7 @@
   </div>
   
   <!-- Texts and so on -->
-  <div style="overflow: hidden; overflow-y: auto;" class="relative h-full w-1/3 mt-6 md:mt-0 md:pl-8">
+  <div style="overflow: hidden; overflow-y: auto;" class="relative h-full w-full md:w-1/3 mt-6 md:mt-0 md:pl-8">
     <!-- Title -->
     <h1 class="text-4xl text-white font-medium">{ post.source.title }</h1>
 

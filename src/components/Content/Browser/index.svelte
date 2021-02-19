@@ -160,7 +160,7 @@
       currentPost.show = false;
 
       // Updating history state back to normal
-      window.history.pushState({}, "", `/explore`);
+      // window.history.pushState({}, "", `/explore`);
     }} class="w-full h-8 bg-dark opacity-75"></div>
 
     <div style="overflow: hidden; overflow-y: auto;" class="relative w-full h-full bg-light-dark rounded-t-md p-6">
@@ -169,7 +169,7 @@
         currentPost.show = false;
 
         // Updating history state back to normal
-        window.history.pushState({}, "", `/explore`);
+        // window.history.pushState({}, "", `/explore`);
       }} style="z-index: 999;" class="absolute top-0 right-0 p-6 rounded-md">
         <Icon name="x" attrs={{ class: "text-white w-5 h-5" }} />
       </button>

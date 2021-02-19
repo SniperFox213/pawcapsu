@@ -48,7 +48,7 @@
 
     // And now we need to change our current url
     // url.searchParams.set('foo', 'bar');
-    window.history.pushState({}, "", `/post/${entry.id}`);
+    // window.history.pushState({}, "", `/post/${entry.id}`);
   };
 
   // After Update
