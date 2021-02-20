@@ -91,7 +91,7 @@
 			<Header />
 			
 			<!-- Content -->
-			<div class="relative w-full flex-grow">
+			<div style="overflow: hidden; overflow-y: auto;" class="relative w-full flex-grow">
 				<div class="absolute inset-0 w-full h-full">
 					<slot></slot>
 				</div>

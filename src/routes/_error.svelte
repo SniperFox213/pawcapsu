@@ -15,6 +15,8 @@
 	<pre>{error.stack}</pre>
 {/if}
 
+<div class="border-2 border-4 border-white"></div>
+
 <div class="bg-pink-500"></div>
 <div class="bg-purple-400"></div>
 
