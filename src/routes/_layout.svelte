@@ -32,13 +32,6 @@
 			.then(() => {
 				// Checking some cache information
 				
-				// @info currentPage
-				// - Let's check for cache's current
-				// page information
-				let currentPage = $cache["currentPage"] || {};
-
-				if (currentPage.path != null) goto(currentPage.path);
-				
 				setTimeout(() => loaded = true, 250);
 			
 				// Let's now subscribe to page store
@@ -98,7 +91,7 @@
 			<Header />
 			
 			<!-- Content -->
-			<div style="overflow: hidden; overflow-y: auto;" class="relative w-full flex-grow">
+			<div class="relative w-full flex-grow">
 				<div class="absolute inset-0 w-full h-full">
 					<slot></slot>
 				</div>

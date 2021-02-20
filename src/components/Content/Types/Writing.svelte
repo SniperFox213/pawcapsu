@@ -119,52 +119,31 @@
 <!-- ContentCard layout -->
 <div in:fade class="w-full md:w-{ sizes.width } relative p-2">
   <div style="padding-top: 120%" class="w-full relative">
-    <div on:click={() => openPost()} on:mouseenter={() => hover = true} on:mouseleave={() => hover = false} class="absolute cursor-pointer inset-0 w-full h-full bg-light-dark rounded-lg flex flex-col">
-      <!-- Avatar + Badge -->
-      <div on:mouseenter={() => profileIconHover = true} on:mouseleave={() => profileIconHover = false} style="z-index: 3;" class="absolute top-0 right-0 p-2 opacity-80">
-        <div class="transition duration-200 ease-in-out bg-dark { profileIconHover ? "pl-3" : "" } rounded-full flex items-center">
-          { #if profileIconHover }
-            <!-- User Name -->
-            <div on:click={() => openProfile()} in:fade class="mr-3 flex items-center text-white cursor-pointer">
-              <h1 class="text-md font-medium border-b border-dotted border-white">{ entry.author.nickname }</h1>
-              
-              <!-- Icon -->
-              <Icon name="link" attrs={{ class: "w-3 h-3 ml-1" }} />
-            </div>
-          { /if }
-          
-          <!-- Avatar -->
-          <div style="background-image: url('{ entry.author.avatar }'); background-size: cover; background-position: center;" class="w-8 h-8 rounded-full"></div>
+    <div on:click={() => openPost()} on:mouseenter={() => hover = true} on:mouseleave={() => hover = false} class="absolute cursor-pointer inset-0 w-full h-full bg-light-dark rounded-lg flex flex-col justify-center items-center">
+      <!-- Author name + Text title -->
+      <div class="px-4 text-center">
+        <p class="text-gray-100 text-sm opacity-75">{ entry.author.nickname }</p>
+        
+        <h1 class="text-2xl text-white font-medium my-0.5">{ entry.source.title }</h1>
+      
+        <p class="text-gray-100 text-sm opacity-75">ビースターズ | BEASTARS</p>
+      </div>
+
+      <!-- Tags -->
+      <div>
+
+      </div>
+
+      <!-- Dots -->
+      <div class="absolute inset-x-0 bottom-0 w-full py-4 text-center opacity-60">
+        <!-- Little help -->
+        <p class="text-xs text-white">Нажмите, что бы узнать больше</p>
+
+        <!-- Pages -->
+        <div class="flex items-center justify-center mt-1">
+          <div class="w-4 h-4 rounded-full bg-white mx-2"></div>
+          <div class="w-3 h-3 rounded-full border-2 border-white mx-2"></div>
         </div>
-      </div>
-
-      <!-- Text Title -->
-      <div style="z-index: 2;" class="p-3">
-        <!-- Image Name -->
-        <h2 class="text-xl text-white font-bold my-2">{ entry.source.title }</h2>
-
-        <!-- Statistics -->
-        <div class="flex items-center opacity-50">
-          <!-- Post Views -->
-          <p class="text-white text-xs">{ entry.source.views } просмотров</p>
-
-          <!-- Dot -->
-          <div class="w-1 h-1 mx-2 bg-white rounded-full"></div>
-          
-          <!-- Post Time -->
-          <p class="text-white text-xs">{ moment(entry.source.published).fromNow() }</p>
-        </div>
-      </div>
-
-      <!-- Description -->
-      <div style="overflow: hidden; overflow-y: auto;" class="w-full flex-grow h-auto px-3 relative">
-        <p class="text-white text-sm opacity-80">{ @html entry.source.description.replace("\n", "<br />") }</p>
-      </div>
-
-      <!-- Stats -->
-      <div class="absolute inset-x-0 bottom-0 w-full flex justify-around items-center px-4 py-4">
-        <p class="text-white text-xs">{ entry.meta.chapters } { entry.meta.chapters == 1 ? "глава" : entry.meta.chapters > 4 ? "глав" : "главы" }</p>
-        <p class="text-white text-xs">{ entry.meta.words } слов</p>
       </div>
     </div>
   </div>
