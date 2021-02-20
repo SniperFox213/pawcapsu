@@ -1,5 +1,6 @@
 // Importing modules
 import { writable } from "svelte/store";
+import bookmarks from "./bookmarks";
 
 import Cookie from "cookie-universal";
 const cookies = Cookie();
@@ -30,8 +31,6 @@ const store = () => {
           .then((response) => {
             // And now let's update our store with
             // user information
-            console.log(response);
-            console.log(response.token._id);
             update(() => {
               resolve(response);
               return response;

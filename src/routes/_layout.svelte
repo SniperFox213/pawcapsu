@@ -1,12 +1,11 @@
 <script>
 	// Importing modules
-	import { fade } from "svelte/transition";
-	import { goto } from "@sapper/app";
 	import { onMount } from "svelte";
 
 	// Importing stores
 	import cache from "../stores/cache.js";
 	import profile from "../stores/profile.js";
+	import socket from "../socket/io.js";
 
 	import { stores } from "@sapper/app";
 	const { page } = stores();
@@ -30,8 +29,9 @@
 			step = "cache";
 			cache.initializeCache()
 			.then(() => {
-				// Checking some cache information
-				
+				// Initializing socket connection
+				socket.initializeConnection();
+
 				setTimeout(() => loaded = true, 250);
 			
 				// Let's now subscribe to page store
@@ -49,6 +49,10 @@
 		});
 	});
 </script>
+
+<svelte:head>
+	<title>Пакапсу | Социальная сеть для лапок</title>
+</svelte:head>
 
 { #if !loaded }
 	<!-- Loader screen -->
