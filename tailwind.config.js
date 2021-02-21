@@ -27,6 +27,12 @@ module.exports = {
 				"lighter-dark": "#ACACA7"
 			},
 
+			borderColor: {
+				"dark": "#1f1d2b",
+				"light-dark": "#353340",
+				"lighter-dark": "#ACACA7"
+			},
+
 			textColor: {
 				"dark": "#1f1d2b",
 				"light-dark": "#5A5861",
