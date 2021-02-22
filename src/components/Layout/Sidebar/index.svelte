@@ -63,7 +63,7 @@
 </script>
 
 <!-- Sidebar -->
-<sidebar style="z-index: 1;" class="{ collapsed ? "w-20" : "w-1/6" } hidden md:flex flex-col bg-dark">
+<sidebar style="z-index: 1;" class="{ collapsed ? "w-20" : "w-1/6" } { $page.path.includes("reader") ? "hidden" : "hidden md:flex" } flex-col bg-dark">
   <!-- Logotype -->
   <div class="h-16 flex { collapsed ? "flex-col justify-center" : "justify-between pl-6 pr-3" } items-center w-full">
     { #if collapsed }

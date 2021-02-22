@@ -1,8 +1,7 @@
 <script>
   // Importing modules
   import { afterUpdate, createEventDispatcher } from "svelte";
-  import moment from "moment";
-
+  
   import { fade } from "svelte/transition";
   import { goto } from "@sapper/app";
 
@@ -10,7 +9,6 @@
 
   // Importing components
   import Icon from "../../Icon.svelte";
-  import Spinner from "../../Spinner.svelte";
 
   // Variables
 
@@ -229,7 +227,9 @@
 
         <!-- Actions -->
         <div style="z-index: 2;" class="absolute h-16 inset-x-0 bottom-0 bg-dark border-2 border-t-0 rounded-b-md border-light-dark w-full px-6 flex justify-center items-center">
-          <button class="w-1/2 flex justify-center items-center h-8 border-r border-light-dark">
+          <button on:click={(e) => {
+            goto(`/reader/${ entry._id }`);
+          }} class="w-1/2 flex justify-center items-center h-8 border-r border-light-dark">
             <Icon name="book-open" attrs={{ class: "w-4 h-4 text-white" }} />
             
             <p class="text-white ml-2">Читать</p>
