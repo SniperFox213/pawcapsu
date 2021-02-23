@@ -82,7 +82,7 @@
         </button>
 			</div>
 		{ :else }
-			<p class="text-sm text-gray-100 opecity-70">Просто что-то загружаем...</p>
+			<p class="text-sm text-gray-100 opacity-70">Просто что-то загружаем...</p>
 		{ /if }
 	</main>
 { :else }
@@ -93,9 +93,9 @@
 		<!-- Container -->
 		<div style="z-index: 0;" class="w-full relative flex flex-col">
 			<Header />
-			
+
 			<!-- Content -->
-			<div style="overflow: hidden; overflow-y: auto;" class="relative w-full flex-grow">
+			<div id="content" style="overflow: hidden; overflow-y: auto;" class="relative w-full flex-grow">
 				<div class="absolute inset-0 w-full h-full">
 					<slot></slot>
 				</div>

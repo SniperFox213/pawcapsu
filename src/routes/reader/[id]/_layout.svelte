@@ -34,7 +34,7 @@
 
 { #if loading }
   <!-- Loading screen -->
-  <div out:fade style="z-index: 999;" class="absolute inset-0 w-full h-full flex justify-center items-center">
+  <div out:fade style="z-index: 999;" class="absolute bg-white inset-0 w-full h-full flex justify-center items-center">
     <Spinner />
   </div>
 { :else }
