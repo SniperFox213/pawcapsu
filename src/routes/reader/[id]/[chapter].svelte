@@ -78,18 +78,21 @@
     axios.get(`https://v1.api.paw.unfull.ml/api/reader/${ data._id }${ $page.params.chapter != null ? `?chapter=${ $page.params.chapter }` : "" }`)
     .then((response) => {
       let { data } = response;
-      
+      console.log("DATA:");
+      console.log(data);
+
       let element = document.getElementById("content");
       element.scrollTop = 0;
 
-      text        = data.text;
-      chapter     = data.title;
-      previousChapter = data.previousChapter;
-      nextChapter = data.nextChapter;
+      text            = data.text;
+      chapter         = data.title;
+
+      nextChapter     = data.nextChapter != null ? data.nextChapter.id : null;
+      previousChapter = data.previousChapter != null ? data.previousChapter.id : null;
 
       // Saving this information into
       // our cache storage
-      cache.setCache("reader/currentText", { chapter: { id: $page.params.chapter, title: chapter }, text: text, nextChapter: nextChapter, previousChapter: previousChapter });
+      cache.setCache("reader/currentText", { chapter: { id: $page.params.chapter, title: chapter }, text: text, chapters: data.chapters, nextChapter: nextChapter, previousChapter: previousChapter });
     });
   };
 
