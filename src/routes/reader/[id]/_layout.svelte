@@ -137,13 +137,13 @@
         <div class="w-full flex mt-2">
           <!-- Dark Theme -->
           <div class="w-full h-16 mx-2 relative flex items-end">
-            { #if $cache[`reader.${ post.id }.theme`].name == "dark" }
+            { #if $cache[`reader.${ post.id }.theme`] != null ? $cache[`reader.${ post.id }.theme`].name == "dark" : false }
               <div class="absolute top-0 right-0">
                 <p class="text-xs text-indigo-400">Выбранная</p>
               </div>
             { /if }
 
-            <div on:click={() => changeTheme("dark")} class="cursor-pointer { $cache[`reader.${ post.id }.theme`].name == "dark" ? " border-2 border-indigo-400" : "" } w-full h-12 flex items-center justify-center rounded-md bg-light-dark">
+            <div on:click={() => changeTheme("dark")} class="cursor-pointer { $cache[`reader.${ post.id }.theme`] != null ? $cache[`reader.${ post.id }.theme`].name == "dark" ? "border-2 border-indigo-400" : "" : "" } w-full h-12 flex items-center justify-center rounded-md bg-light-dark">
               <Icon name="moon" attrs={{ class: "w-6 h-6 text-white" }} />
               
               <p class="ml-2 text-white text-sm">Тёмная</p>
@@ -152,13 +152,13 @@
 
           <!-- Light Theme -->
           <div class="w-full h-16 mx-2 relative flex items-end">
-            { #if $cache[`reader.${ post.id }.theme`].name == "light" }
+            { #if $cache[`reader.${ post.id }.theme`] != null ? $cache[`reader.${ post.id }.theme`].name == "dark" : false }
               <div class="absolute top-0 right-0">
                 <p class="text-xs text-indigo-400">Выбранная</p>
               </div>
             { /if }
               
-            <div on:click={() => changeTheme("light")} class="cursor-pointer { $cache[`reader.${ post.id }.theme`].name == "light" ? " border-2 border-indigo-400" : "" } w-full h-12 flex items-center justify-center rounded-md bg-gray-200">
+            <div on:click={() => changeTheme("light")} class="cursor-pointer { $cache[`reader.${ post.id }.theme`] != null ? $cache[`reader.${ post.id }.theme`].name == "light" ? "border-2 border-indigo-400" : "" : "" } w-full h-12 flex items-center justify-center rounded-md bg-gray-200">
               <Icon name="sun" attrs={{ class: "w-6 h-6 text-dark" }} />
               
               <p class="ml-2 text-dark text-sm">Светлая</p>
