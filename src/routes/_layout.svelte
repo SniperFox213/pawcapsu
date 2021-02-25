@@ -87,7 +87,7 @@
 	</main>
 { :else }
 	<!-- Main -->
-	<main class="w-full h-screen flex bg-dark">
+	<main class="w-full flex bg-dark">
 		<Sidebar />
 
 		<!-- Container -->
@@ -95,7 +95,7 @@
 			<Header />
 
 			<!-- Content -->
-			<div id="content" class="md:overflow-hidden md:overflow-y-auto relative w-full flex-grow pt-16">
+			<div class="md:overflow-hidden md:overflow-y-auto relative w-full flex-grow pt-16">
 				<div class="relative md:absolute inset-0 w-full h-full">
 					<slot></slot>
 				</div>

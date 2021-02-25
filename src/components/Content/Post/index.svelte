@@ -1,14 +1,7 @@
 <script>
-  // Importing modules
-  import { onMount } from "svelte";
-
   // Importing components
   import Icon from "../../Icon.svelte";
   // Exporting some variables
-
-  // @export id
-  // - This post id
-  export let id;
 
   // @export post
   // - Preloaded post data

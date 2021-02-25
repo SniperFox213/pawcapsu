@@ -24,46 +24,78 @@
       // component and so on)
       cache.setCache("reader/current", { type: "text", data: data, url: $page.path });
 
+      post    = data;
       loading = false;
-    }).catch(() => {
 
+      // Getting reader settings
+      if ($cache[`reader.${ data.id }.theme`] != null) {
+        let theme = $cache[`reader.${ data.id }.theme`];
+
+        for (const key in theme) {
+          settings.setSetting("reader.theme.choosen", theme.name);
+
+          if (Object.hasOwnProperty.call(theme, key)) {
+            const element = theme[key];
+            
+            settings.setSetting(key, element);
+          };
+        };
+      };
+    }).catch(() => {
     });
   });
 
-  function changeTheme(theme) {
-    settings.setSetting("reader.theme.choosen", theme);
+  function changeTheme(themeName) {
+    settings.setSetting("reader.theme.choosen", themeName);
+
+    let theme = {};
     
-    if (theme == "dark") {
+    if (themeName == "dark") {
       // Changing theme to dark
+      theme = {
+        "reader.theme.container.background": "#1f1d2b",
+        "reader.theme.text.color": "#fff",
 
-      // reader itself
-      settings.setSetting("reader.theme.container.background", "#1f1d2b");
-      settings.setSetting("reader.theme.text.color", "#fff");
+        "reader.theme.header.background": "#1f1d2b",
+        "reader.theme.header.borderColor": "#353340",
 
-      settings.setSetting("reader.theme.header.background", "#1f1d2b");
-      settings.setSetting("reader.theme.header.borderColor", "#353340");
+        "reader.theme.menu.background": "#1f1d2b",
+        "reader.theme.menu.plateBackground": "#353340",
 
-      settings.setSetting("reader.theme.menu.background", "#1f1d2b");
-      settings.setSetting("reader.theme.menu.plateBackground", "#353340");
-
-      settings.setSetting("reader.theme.iconColor", "#fff");
-    
-      // menu
+        "reader.theme.iconColor": "#fff"
+      };
+  
     } else {
-      // Changing theme to light
-      settings.setSetting("reader.theme.container.background", "#F3F4F6");
-      settings.setSetting("reader.theme.text.color", "#000");
+      theme = {
+        "reader.theme.container.background": "#F3F4F6",
+        "reader.theme.text.color": "#000",
 
-      settings.setSetting("reader.theme.header.background", "#F3F4F6");
-      settings.setSetting("reader.theme.header.borderColor", "#E5E7EB");
+        "reader.theme.header.background": "#F3F4F6",
+        "reader.theme.header.borderColor": "#E5E7EB",
 
-      settings.setSetting("reader.theme.menu.background", "#F3F4F6");
-      settings.setSetting("reader.theme.menu.plateBackground", "#D1D5DB");
+        "reader.theme.menu.background": "#F3F4F6",
+        "reader.theme.menu.plateBackground": "#D1D5DB",
 
-      settings.setSetting("reader.theme.iconColor", "#000");
+        "reader.theme.iconColor": "#000"
+      };
     };
+
+    // Updating theme settings
+    for (const key in theme) {
+      if (Object.hasOwnProperty.call(theme, key)) {
+        const element = theme[key];
+        
+        settings.setSetting(key, element);
+      };
+    };
+
+    theme.name = themeName;
+
+    // Saving this theme settings to our cache storage
+    if (post.id != null) cache.setCache(`reader.${ post.id }.theme`, theme);
   };
 
+  let post    = {};
   let loading = true;
 </script>
 
@@ -97,7 +129,7 @@
 
         <!-- Texts -->
         <div class="text-center my-4">
-          <h1 class="text-xl md:text-3xl text-white">Мы вас любим и хотим предупредить</h1>
+          <h1 class="text-xl md:text-3xl text-white">Но перед началом...</h1>
           <p class="text-xs md:text-sm text-gray-100 opacity-80">Перед тем, как продолжить, вам стоит выбрать тему читалки! Это невероятно важный шаг, ибо... Это просто очень важный шаг короче, да! Просто выберите уже тему читалки и начинайте читать! Мы запомним ваш выбор, но не факт что навсегда :></p>
         </div>
 
@@ -105,7 +137,13 @@
         <div class="w-full flex mt-2">
           <!-- Dark Theme -->
           <div class="w-full h-16 mx-2 relative flex items-end">
-            <div on:click={() => changeTheme("dark")} class="cursor-pointer w-full h-12 flex items-center justify-center rounded-md bg-light-dark">
+            { #if $cache[`reader.${ post.id }.theme`].name == "dark" }
+              <div class="absolute top-0 right-0">
+                <p class="text-xs text-indigo-400">Выбранная</p>
+              </div>
+            { /if }
+
+            <div on:click={() => changeTheme("dark")} class="cursor-pointer { $cache[`reader.${ post.id }.theme`].name == "dark" ? " border-2 border-indigo-400" : "" } w-full h-12 flex items-center justify-center rounded-md bg-light-dark">
               <Icon name="moon" attrs={{ class: "w-6 h-6 text-white" }} />
               
               <p class="ml-2 text-white text-sm">Тёмная</p>
@@ -114,11 +152,13 @@
 
           <!-- Light Theme -->
           <div class="w-full h-16 mx-2 relative flex items-end">
-            <div class="absolute top-0 right-0">
-              <p class="text-xs text-indigo-400">Выбранная</p>
-            </div>
+            { #if $cache[`reader.${ post.id }.theme`].name == "light" }
+              <div class="absolute top-0 right-0">
+                <p class="text-xs text-indigo-400">Выбранная</p>
+              </div>
+            { /if }
               
-            <div on:click={() => changeTheme("light")} class="cursor-pointer border-2 border-indigo-400 w-full h-12 flex items-center justify-center rounded-md bg-gray-200">
+            <div on:click={() => changeTheme("light")} class="cursor-pointer { $cache[`reader.${ post.id }.theme`].name == "light" ? " border-2 border-indigo-400" : "" } w-full h-12 flex items-center justify-center rounded-md bg-gray-200">
               <Icon name="sun" attrs={{ class: "w-6 h-6 text-dark" }} />
               
               <p class="ml-2 text-dark text-sm">Светлая</p>

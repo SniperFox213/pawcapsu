@@ -116,9 +116,8 @@
                 <img class="h-3/4" src="./stickers/0/6.png" alt="Emoji">
 
                 <!-- Texts -->
-                <div class="ml-6 w-max">
-                  <h1 class="text-base">Посмотрите на <span class="border-b border-dotted border-white">Плейсы</span>!</h1>
-                  <p class="text-xs opacity-70">Это одна из немного особенностей нашего сайта, которую мы очень хочем вам показать!</p>
+                <div class="ml-6 w-max text-white">
+                  <p class="text-xs opacity-70"><span class="border-b border-dotted border-white">Плейсы</span>. Это одна из немногих особенностей нашего сайта, которую мы очень хочем вам показать!</p>
                 
                   <!-- Buttons -->
                   <div class="mt-2 w-full flex justify-center items-center">

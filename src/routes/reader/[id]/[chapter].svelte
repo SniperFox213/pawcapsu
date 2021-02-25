@@ -1,5 +1,7 @@
 <script>
   // Importing modules
+  import { fade } from "svelte/transition";
+
   import { goto } from "@sapper/app";
   import { onMount } from "svelte";
   import axios from "axios";
@@ -14,6 +16,12 @@
   // Importing components
   import { Icon, Spinner } from "../../../components";
 
+  function randomInteger(min, max) {
+    // получить случайное число от (min-0.5) до (max+0.5)
+    let rand = min - 0.5 + Math.random() * (max - min + 1);
+    return Math.round(rand);
+  };
+
   onMount(() => {
     // Let's now subscribe to our
     // cache store
@@ -22,29 +30,31 @@
         let reader = obj["reader/current"];
 
         if (reader.type == "text") {
-          data        = reader.data;
-          data.loaded = true;
+          post        = reader.data;
+          post.loaded = true;
         } else {
           // Error
         };
       };
     });
 
-    page.subscribe((obj) => {
+    page.subscribe(() => {
       fetchData();
     });
 
-    let element = document.getElementById("content");
-
-    element.addEventListener("scroll", () => {
-      // Saving scroll position
-      cache.setCache(`reader/currentScroll`, element.scrollTop);
-
-      // if (element.scrollTop + element.clientHeight >= element.scrollHeight - 200) {
-      //   fetchData();
-      // };
-    });
+    window.addEventListener("scroll", () => scroll());
   });
+
+  function scroll() {
+    let element = document.scrollingElement;
+
+    // Saving scroll position
+    cache.setCache(`reader.${ post.id }.scroll`, element.scrollTop);
+
+    if (element.scrollTop >= element.scrollHeight/1.5) {
+      console.log("READ");
+    };
+  };
 
   function fetchData() {
     let chapterId = $page.params.chapter;
@@ -60,13 +70,16 @@
       } else {
         text            = data.text;
         chapter         = data.chapter.title;
+        chapters        = data.chapters;
         nextChapter     = data.nextChapter;
         previousChapter = data.previousChapter;
 
+        loaded = true;
+
         // Scrolling to reading position;
         setTimeout(() => {
-          let element = document.getElementById("content");
-          element.scrollTop = $cache[`reader/currentScroll`];
+          let element = document.scrollingElement;
+          element.scrollTop = $cache[`reader.${ post.id }.scroll`];
         }, 250);
       };
     } else {
@@ -75,8 +88,10 @@
   };
 
   function fetchNewData() {
+    loaded = false;
+
     // Getting text information
-    axios.get(`https://v1.api.paw.unfull.ml/api/reader/${ data._id }${ $page.params.chapter != null ? `?chapter=${ $page.params.chapter }` : "" }`)
+    axios.get(`https://v1.api.paw.unfull.ml/api/reader/${ post._id }${ $page.params.chapter != null ? `?chapter=${ $page.params.chapter }` : "" }`)
     .then((response) => {
       let { data } = response;
 
@@ -85,6 +100,7 @@
 
       text            = data.text;
       chapter         = data.title;
+      chapters        = data.chapters;
 
       nextChapter     = data.nextChapter != null ? data.nextChapter.id : null;
       previousChapter = data.previousChapter != null ? data.previousChapter.id : null;
@@ -92,16 +108,23 @@
       // Saving this information into
       // our cache storage
       cache.setCache("reader/currentText", { chapter: { id: $page.params.chapter, title: chapter }, text: text, chapters: data.chapters, nextChapter: nextChapter, previousChapter: previousChapter });
+    
+      setTimeout(() => {
+        loaded = true;
+      }, 150);
     });
   };
 
   // Post information
   let text;
+  let loaded = false;
   let chapter = "Загрузка...";
   let nextChapter;
   let previousChapter;
 
-  let data = {
+  let chapters = [];
+
+  let post = {
     source: {},
     author: {}
   };
@@ -118,41 +141,120 @@
 <div style="color: { $settings["reader.theme.text.color"] }; font-family: 'Open Sans', sans-serif; background: { $settings["reader.theme.container.background"] || "#F3F4F6" }" class="transition duration-300 ease-in-out w-full relative">
   <!-- Chapter information -->
   <div class="py-16 text-center">
-    <h1 class="text-md font-medium opacity-70">{ data.source.title }</h1>
-
     <!-- Chapter title -->
-    <p class="text-4xl">{ chapter }</p>
+    { #if loaded }
+      <h1 in:fade class="text-md font-medium opacity-70">{ post.source.title }</h1>
+
+      <p in:fade class="text-4xl">{ chapter }</p>
+    { :else }
+      <div in:fade class="flex flex-col items-center justify-center">
+        <div class="w-1/3 flex relative">
+          <div class="w-{ randomInteger(1, 4) }/12 mx-2 rounded-full bg-light-dark h-4 my-2"></div>
+          <div class="w-full mx-2 rounded-full bg-light-dark h-4 my-2"></div>
+        </div>
+
+        <div class="w-full flex relative px-6">
+          <div class="w-{ randomInteger(1, 4) }/12 mx-2 rounded-full bg-light-dark h-8 my-2"></div>
+          <div class="w-full mx-2 rounded-full bg-light-dark h-8 my-2"></div>
+        </div>
+      </div>
+    { /if }
   </div>
 
-  <div class="px-4 md:px-12 opacity-80 h-full relative">
+  <div class="px-4 md:px-12 h-full relative">
     <!-- Text itself -->
-    { #if text != null }
-      <p>{ @html text }</p>
+    { #if text != null && loaded }
+      <p in:fade class="opacity-80">{ @html text }</p>
 
-      <!-- Next chapter (or end notes) -->
-      <div class="w-full py-8 flex items-center">
-        <!--  -->
-        { #if previousChapter != null}
-          <button on:click={(e) => {
-            goto(`/reader/${ data._id }/${ previousChapter }`);
-          }} class="px-4 py-2 w-full rounded-md bg-dark text-white">
-            Предыдущая глава
-          </button>
-        { /if }
+      <!-- End notes -->
+      <div class="w-full pt-8">
+        
+        <div style="z-index: 1; background: { $settings["reader.theme.menu.plateBackground"] }" class="w-full flex flex-col items-center justify-center px-4 py-6 rounded-md relative">
+          <!-- Header -->
+          <div class="absolute inset-x-0 top-0 w-full flex justify-between p-4">
+            <p class="text-sm text-white opacity-80">Конец</p>
 
-        { #if nextChapter != null }
-          <button on:click={(e) => {
-            goto(`/reader/${ data._id }/${ nextChapter }`);
-          }} class="ml-4 px-4 py-2 w-full rounded-md bg-dark text-white">
-            Следующая глава
-          </button>
-        { /if }
+            <button>
+              <Icon name="x" attrs={{ class: "w-5 h-5 text-white" }} />
+            </button>
+          </div>
+          
+          <!-- Text -->
+          <div class="mt-6 text-center">
+            <h1 class="text-2xl text-white">Главы</h1>
+            <p class="text-sm text-gray-100 opacity-80">Этот рассказ ещё не закончился! Продолжайте читать его и наслаждаться потрясающим сюжетом! Не забудьте заглянутьв <span class="border-b border-dotted border-gray-100">Плейс</span> этого рассказа.</p>
+          </div>
+
+          <!-- Chapters list -->
+          <div class="w-full mt-6">
+            { #if chapters != null && chapters.length > 0 }
+            
+              { #each chapters.filter((x) => {
+                let index = chapters.indexOf(x);
+                let ids   = [chapters[index - 1], chapters[index + 1]];
+
+                if (ids.find((x) => x != null ? x.id == $page.params.chapter || x.id == nextChapter || x.id == previousChapter : false)) return true;
+              }) as chapter }
+                <div on:click={(e) => goto(`/reader/${ $page.params.id }/${ chapter.id }`)} class="{ $page.params.chapter == chapter.id ? "bg-indigo-400" : "bg-dark" } w-full my-4 rounded-md p-3 flex items-center text-white text-sm relative">
+                  { chapter.title }
+    
+                  <!-- Status -->
+                  { #if $page.params.chapter == chapter.id || nextChapter == chapter.id }
+                    <div class="absolute inset-y-0 right-0 pr-3 flex items-center">
+                      <p class="text-xs text-gray-100 opacity-80">{ $page.params.chapter == chapter.id ? "Текущая" : "Следующая" }</p>
+                    </div>
+                  { /if }
+                </div>
+              { /each }
+
+            { /if }
+          </div>
+
+          <!-- Buttons -->
+          <div class="my-6 mb-12 w-full flex justify-center items-center">
+            <!-- Previous chapter -->
+            { #if previousChapter != null }
+              <button on:click={(e) => goto(`/reader/${ $page.params.id }/${ previousChapter }`)} class="w-full rounded-md bg-dark flex justify-center items-center py-3 my-3">
+                <Icon name="chevron-left" attrs={{ class: "w-5 h-5 text-white" }} />
+
+                <p class="text-sm text-white ml-2">Предыдущая глава</p>
+              </button>
+            { /if }
+
+            <!-- Next Chapter -->
+            { #if nextChapter != null }
+              <button on:click={(e) => goto(`/reader/${ $page.params.id }/${ nextChapter }`)} class="{ previousChapter != null ? "ml-3" : "" } w-full rounded-md bg-dark flex justify-center items-center py-3 my-3">
+                <p class="text-sm text-white mr-2">Следующая глава</p>
+
+                <Icon name="chevron-right" attrs={{ class: "w-5 h-5 text-white" }} />
+              </button>
+            { /if }
+          </div>
+
+          <!-- Dots -->
+          <div class="absolute inset-x-0 bottom-0 w-full flex items-center opacity-60 justify-center py-4">
+            <div class="w-4 h-4 bg-white rounded-full mx-2"></div>
+            <div class="w-3 h-3 border-2 border-white rounded-full mx-2"></div>
+          </div>
+        </div>
+
+        <div class="w-full mt-4 flex justify-end items-center">
+          <div class="opacity-80 rounded-md px-2 py-0.5 bg-light-dark mr-2">
+            <p class="text-xs text-gray-100">Нажми на второй кружочек, дружочек<br />У меня есть что тебе показать...</p>
+          </div>
+
+          <img class="w-1/6 rounded-md" src="./stickers/0/32.png" alt="">
+        </div>
       </div>
     { :else }
-      <div class="w-full h-screen flex flex-col justify-center items-center">
-        <div class="w-24 h-24 bg-white rounded-md flex justify-center items-center">
-          <Spinner />
-        </div>
+      <!-- Loading -->
+      <div class="flex flex-wrap w-full relative">
+        { #each new Array(20) as i }
+          <div in:fade class="w-full flex relative">
+            <div class="w-{ randomInteger(1, 10) }/12 mx-2 rounded-full bg-light-dark h-6 my-2"></div>
+            <div class="w-full mx-2 rounded-full bg-light-dark h-6 my-2"></div>
+          </div>
+        { /each }
       </div>
     { /if }
   </div>
