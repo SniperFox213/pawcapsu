@@ -268,7 +268,7 @@
         <div style="background: { $settings["reader.theme.menu.plateBackground"] }" class="w-full my-4 rounded-md h-32 flex justify-between items-center px-6">
           <!-- Texts -->
           <div class="w-1/4">
-            <h1 class="text-base">Шрифт</h1>
+            <h1 class="text-xl">Шрифт</h1>
             <!-- <p class="text-xs opacity-80">Выберите идеальный размер шрифта</p> -->
           </div>
 
@@ -297,12 +297,12 @@
         <div style="background: { $settings["reader.theme.menu.plateBackground"] }" class="w-full my-4 rounded-md h-32 flex justify-between items-center px-6">
           <!-- Texts -->
           <div class="w-1/4">
-            <h1 class="text-base">Тема</h1>
+            <h1 class="text-xl">Тема</h1>
             <!-- <p class="text-xs opacity-80">Тёмная - что бы глазкам не было больно, светлая... Просто так</p> -->
           </div>
           
           <!-- Theme picker -->
-          <div class="w-3/4 flex items-center px-6">
+          <div class="w-3/4 flex justify-center items-center px-2">
             
             <!-- Light -->
             <div class="w-1/2 p-2">
