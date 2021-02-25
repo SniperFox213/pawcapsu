@@ -249,9 +249,9 @@
     { :else }
 
       { #if $settings["reader.theme.choosen"] == "dark" }
-        <img class="w-7 h-7" src="https://res.cloudinary.com/lococovu-cdn/image/upload/v1614110162/logotypes/pawcapsu-white-small.svg" alt="pawcapsu logotype">
-      { :else }
         <img class="w-7 h-7" src="https://res.cloudinary.com/lococovu-cdn/image/upload/v1610810215/logotypes/pawcapsu-white-small.svg" alt="pawcapsu logotype">
+      { :else }
+        <img class="w-7 h-7" src="https://res.cloudinary.com/lococovu-cdn/image/upload/v1614110162/logotypes/pawcapsu-black-small.svg" alt="pawcapsu logotype">
       { /if }
 
     { /if }
