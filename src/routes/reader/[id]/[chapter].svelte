@@ -217,14 +217,14 @@
               <button on:click={(e) => goto(`/reader/${ $page.params.id }/${ previousChapter }`)} class="w-full rounded-md bg-dark flex justify-center items-center py-3 my-3">
                 <Icon name="chevron-left" attrs={{ class: "w-5 h-5 text-white" }} />
 
-                <p class="text-sm text-white ml-2">Предыдущая глава</p>
+                <p class="text-sm text-white ml-2">Предыдущая <span class="hidden md:block">глава</span></p>
               </button>
             { /if }
 
             <!-- Next Chapter -->
             { #if nextChapter != null }
               <button on:click={(e) => goto(`/reader/${ $page.params.id }/${ nextChapter }`)} class="{ previousChapter != null ? "ml-3" : "" } w-full rounded-md bg-dark flex justify-center items-center py-3 my-3">
-                <p class="text-sm text-white mr-2">Следующая глава</p>
+                <p class="text-sm text-white mr-2">Следующая <span class="hidden md:block">глава</span></p>
 
                 <Icon name="chevron-right" attrs={{ class: "w-5 h-5 text-white" }} />
               </button>

@@ -267,13 +267,13 @@
         <!-- Text size -->
         <div style="background: { $settings["reader.theme.menu.plateBackground"] }" class="w-full my-4 rounded-md h-32 flex justify-between items-center px-6">
           <!-- Texts -->
-          <div class="w-1/3">
+          <div class="w-1/4">
             <h1 class="text-base">Шрифт</h1>
-            <p class="text-xs opacity-80">Выберите идеальный размер шрифта</p>
+            <!-- <p class="text-xs opacity-80">Выберите идеальный размер шрифта</p> -->
           </div>
 
           <!-- Text size -->
-          <div class="w-2/3 flex items-center flex justify-center items-center">
+          <div class="w-3/4 flex items-center flex justify-center items-center">
             <!-- Plus -->
             <button on:click={(e) => {
               settings.setSetting("reader.theme.text.size", parseInt($settings["reader.theme.text.size"] || 16) - 1);
@@ -296,13 +296,13 @@
         <!-- Theme -->
         <div style="background: { $settings["reader.theme.menu.plateBackground"] }" class="w-full my-4 rounded-md h-32 flex justify-between items-center px-6">
           <!-- Texts -->
-          <div class="w-1/3">
+          <div class="w-1/4">
             <h1 class="text-base">Тема</h1>
-            <p class="text-xs opacity-80">Тёмная - что бы глазкам не было больно, светлая... Просто так</p>
+            <!-- <p class="text-xs opacity-80">Тёмная - что бы глазкам не было больно, светлая... Просто так</p> -->
           </div>
           
           <!-- Theme picker -->
-          <div class="w-2/3 flex items-center px-6">
+          <div class="w-3/4 flex items-center px-6">
             
             <!-- Light -->
             <div class="w-1/2 p-2">
