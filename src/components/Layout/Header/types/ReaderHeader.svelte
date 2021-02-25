@@ -4,6 +4,7 @@
   import { onMount } from "svelte";
 
   // Importing stores
+  import settings from "../../../../stores/account/settings.js";
   import cache from "../../../../stores/cache.js";
   import profile from "../../../../stores/profile.js";
 
@@ -37,14 +38,14 @@
 
 <!-- Mobile menu -->
 { #if menuOpened }
-  <div style="z-index: 1000; overflow: hidden; overflow-y: auto;" class="fixed md:hidden inset-0 w-full h-full bg-dark mt-16 pb-24">
+  <div style="z-index: 1000; overflow: hidden; overflow-y: auto; background: { $settings["reader.theme.menu.background"] }; color: { $settings["reader.theme.text.color"] }" class="fixed md:hidden inset-0 w-full h-full mt-16 pb-24">
     { #if menuPage == 0 }
       <!-- Fast-actions -->
       <div class="px-2 py-4">
         <!-- Title -->
         <div class="mx-2 w-full border-b-2 border-indigo-400 py-2">
-          <h1 class="text-2xl text-white">Быстрые действия</h1>
-          <p class="text-sm text-gray-100 opacity-70">Всё то, что вам может пригодится прямо тут и прямо сейчас.</p>
+          <h1 class="text-2xl ">Быстрые действия</h1>
+          <p class="text-sm opacity-70">Всё то, что вам может пригодится прямо тут и прямо сейчас.</p>
         </div>
 
         <!-- Content -->
@@ -52,14 +53,14 @@
           <!-- Reader settings -->
           <div class="w-full p-2">
             <div style="padding-top: 30%" class="w-full relative">
-              <div class="absolute inset-0 w-full h-full rounded-md bg-light-dark flex justify-center items-center px-6">
+              <div style="background: { $settings["reader.theme.menu.plateBackground"] }" class="absolute inset-0 w-full h-full rounded-md flex justify-center items-center px-6">
                 <!-- Image -->
                 <img class="h-2/4" src="./icons/wrench.png" alt="Wrench Icon">
 
                 <!-- Texts -->
                 <div class="ml-6 w-max">
-                  <h1 class="text-base text-white">Настройки читалки</h1>
-                  <p class="text-xs text-gray-100 opacity-70">Настройте цвет фона, букв; размер отступов, размер букв и ещё много-много другого.</p>
+                  <h1 class="text-base">Настройки читалки</h1>
+                  <p class="text-xs opacity-70">Настройте цвет фона, букв; размер отступов, размер букв и ещё много-много другого.</p>
                 </div>
               </div>
             </div>
@@ -70,13 +71,13 @@
             <div style="padding-top: 100%;" class="w-full relative">
               <div on:click={(e) => {
                 menuPage = 2;
-              }} class="absolute inset-0 w-full h-full rounded-md bg-light-dark flex flex-col items-center justify-center">
+              }} style="background: { $settings["reader.theme.menu.plateBackground"] }" class="absolute inset-0 w-full h-full rounded-md flex flex-col items-center justify-center">
                 <!-- Image -->
                 <img class="h-1/3" src="./icons/bookmark-tabs.png" alt="Wrench Icon">
 
                 <!-- Texts -->
                 <div class="mt-4">
-                  <h1 class="text-md text-white">Главы</h1>
+                  <h1 class="text-md">Главы</h1>
                 </div>
               </div>
             </div>
@@ -84,13 +85,13 @@
 
           <div class="w-1/3 p-2">
             <div style="padding-top: 100%;" class="w-full relative">
-              <div class="absolute inset-0 w-full h-full rounded-md bg-light-dark flex flex-col items-center justify-center">
+              <div style="background: { $settings["reader.theme.menu.plateBackground"] }" class="absolute border-2 border-dotted border-indigo-400 inset-0 w-full h-full rounded-md flex flex-col items-center justify-center">
                 <!-- Image -->
-                <img class="h-1/3" src="./icons/speech-balloon.png" alt="Chat bubble Icon">
+                <img class="h-1/3" src="./icons/house-with-garden.png" alt="Chat bubble Icon">
 
                 <!-- Texts -->
                 <div class="mt-4">
-                  <h1 class="text-md text-white">Чат</h1>
+                  <h1 class="text-md">Плейс</h1>
                 </div>
               </div>
             </div>
@@ -100,9 +101,93 @@
             <div style="padding-top: 100%;" class="w-full relative">
               <div class="absolute inset-0 w-full h-full rounded-md border-4 border-dotted border-light-dark flex flex-col items-center justify-center">
                 <div class="w-2/3 text-center">
-                  <p class="text-base text-white">Ещё что-то</p>
-                  <p class="text-xs text-gray-100 opacity-70">Скоро тут что-то будет...</p>
+                  <p class="text-sm">Ещё что-то</p>
+                  <!-- <p class="text-xs opacity-70">Скоро тут что-то будет...</p> -->
                 </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Place ad -->
+          <div class="w-full p-2 pt-4">
+            <div style="padding-top: 30%" class="w-full relative">
+              <div class="absolute inset-0 w-full h-full rounded-md bg-indigo-400 opacity-60 flex justify-center items-center px-6">
+                <!-- Image -->
+                <img class="h-3/4" src="./stickers/0/6.png" alt="Emoji">
+
+                <!-- Texts -->
+                <div class="ml-6 w-max">
+                  <h1 class="text-base">Посмотрите на <span class="border-b border-dotted border-white">Плейсы</span>!</h1>
+                  <p class="text-xs opacity-70">Это одна из немного особенностей нашего сайта, которую мы очень хочем вам показать!</p>
+                
+                  <!-- Buttons -->
+                  <div class="mt-2 w-full flex justify-center items-center">
+                    <button on:click={(e) => {
+                      // cache.setCache("hidLoadedFromStorageNotification", true);
+                    }} class="flex opacity-80 w-full items-center justify-center py-1 rounded-md bg-dark">
+                      <p class="text-xs font-medium">Скрыть</p>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Site Pages -->
+      <div class="px-2 py-4">
+        <!-- Title -->
+        <div class="mx-2 w-full border-b-2 border-indigo-400 py-2">
+          <h1 class="text-2xl">Навигация</h1>
+          <p class="text-sm opacity-70">Удобная и быстрая навигация по всему сайту именно тут!</p>
+        </div>
+
+        <!-- Content -->
+        <div class="w-full flex flex-wrap relative mt-2">
+          <!-- Reader settings -->
+          <div class="w-full p-2">
+            <div style="padding-top: 30%" class="w-full relative">
+              <div on:click={(e) => {
+                menuOpened = false;
+                menuPage = 0;
+
+                goto("/explore");
+              }} style="background: { $settings["reader.theme.menu.plateBackground"] }" class="absolute inset-0 w-full h-full rounded-md flex justify-center items-center px-6">
+                <!-- Image -->
+                <img class="h-2/4" src="./icons/compass.png" alt="Wrench Icon">
+
+                <!-- Texts -->
+                <div class="ml-6 w-max">
+                  <h1 class="text-base">Исследовать</h1>
+                  <p class="text-xs opacity-70">Исследуйте новый контент прямо на лету!</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        
+          <!-- Other -->
+          <div class="w-1/3 p-2">
+            <div style="padding-top: 100%;" class="w-full relative">
+              <div style="background: { $settings["reader.theme.menu.plateBackground"] }" class="absolute inset-0 w-full h-full rounded-md">
+                
+              </div>
+            </div>
+          </div>
+
+          <div class="w-1/3 p-2">
+            <div style="padding-top: 100%;" class="w-full relative">
+              <div style="background: { $settings["reader.theme.menu.plateBackground"] }" class="absolute inset-0 w-full h-full rounded-md">
+                
+              </div>
+            </div>
+          </div>
+
+          <div class="w-1/3 p-2">
+            <div style="padding-top: 100%;" class="w-full relative">
+              <div style="background: { $settings["reader.theme.menu.plateBackground"] }" class="absolute inset-0 w-full h-full rounded-md">
+                
               </div>
             </div>
           </div>
@@ -146,70 +231,11 @@
         </div>
       </div>
     { /if }
-
-    <!-- Site pages -->
-    <div class="px-2 py-4">
-      <!-- Title -->
-      <div class="mx-2 w-full border-b-2 border-indigo-400 py-2">
-        <h1 class="text-2xl text-white">Навигация</h1>
-        <p class="text-sm text-gray-100 opacity-70">Удобная и быстрая навигация по всему сайту именно тут!</p>
-      </div>
-
-      <!-- Content -->
-      <div class="w-full flex flex-wrap relative mt-2">
-        <!-- Reader settings -->
-        <div class="w-full p-2">
-          <div style="padding-top: 30%" class="w-full relative">
-            <div on:click={(e) => {
-              menuOpened = false;
-              menuPage = 0;
-
-              goto("/explore");
-            }} class="absolute inset-0 w-full h-full rounded-md bg-light-dark flex justify-center items-center px-6">
-              <!-- Image -->
-              <img class="h-2/4" src="./icons/compass.png" alt="Wrench Icon">
-
-              <!-- Texts -->
-              <div class="ml-6 w-max">
-                <h1 class="text-base text-white">Исследовать</h1>
-                <p class="text-xs text-gray-100 opacity-70">Исследуйте новый контент прямо на лету!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      
-        <!-- Other -->
-        <div class="w-1/3 p-2">
-          <div style="padding-top: 100%;" class="w-full relative">
-            <div class="absolute inset-0 w-full h-full rounded-md bg-light-dark">
-              
-            </div>
-          </div>
-        </div>
-
-        <div class="w-1/3 p-2">
-          <div style="padding-top: 100%;" class="w-full relative">
-            <div class="absolute inset-0 w-full h-full rounded-md bg-light-dark">
-              
-            </div>
-          </div>
-        </div>
-
-        <div class="w-1/3 p-2">
-          <div style="padding-top: 100%;" class="w-full relative">
-            <div class="absolute inset-0 w-full h-full rounded-md bg-light-dark">
-              
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
   </div>
 { /if }
 
 <!-- Header -->
-<div class="w-full flex justify-between bg-white border-b border-gray-200 items-center h-16 px-6 md:px-8 relative">
+<div style="z-index: 999; background: { $settings["reader.theme.header.background"] }; border-color: { $settings["reader.theme.header.borderColor"] }" class="fixed top-0 w-full flex justify-between bg-white border-b items-center h-16 px-6 md:px-8">
   <!-- Pawcapsu Logotype (mobile) -->
   <div on:click={(e) => {
     if (menuOpened) {
@@ -219,9 +245,15 @@
     };
   }} style="z-index: 1000;" class="absolute cursor-pointer inset-0 md:left-0 flex justify-center items-center px-6">
     { #if menuOpened }
-      <Icon name="x" attrs={{ class: "w-7 h-7 text-black" }}/>
+      <Icon name="x" attrs={{ style: `color: ${ $settings["reader.theme.iconColor"] }`, class: "w-7 h-7" }}/>
     { :else }
-      <img class="w-7 h-7" src="https://res.cloudinary.com/lococovu-cdn/image/upload/v1614110162/logotypes/pawcapsu-black-small.svg" alt="pawcapsu logotype">
+
+      { #if $settings["reader.theme.choosen"] == "dark" }
+        <img class="w-7 h-7" src="https://res.cloudinary.com/lococovu-cdn/image/upload/v1614110162/logotypes/pawcapsu-white-small.svg" alt="pawcapsu logotype">
+      { :else }
+        <img class="w-7 h-7" src="https://res.cloudinary.com/lococovu-cdn/image/upload/v1610810215/logotypes/pawcapsu-white-small.svg" alt="pawcapsu logotype">
+      { /if }
+
     { /if }
   </div>
 

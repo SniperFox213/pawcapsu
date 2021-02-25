@@ -5,6 +5,7 @@
   import axios from "axios";
 
   // Importing stores
+  import settings from "../../../stores/account/settings.js";
   import cache from "../../../stores/cache.js";
   
   import { stores } from "@sapper/app";
@@ -78,8 +79,6 @@
     axios.get(`https://v1.api.paw.unfull.ml/api/reader/${ data._id }${ $page.params.chapter != null ? `?chapter=${ $page.params.chapter }` : "" }`)
     .then((response) => {
       let { data } = response;
-      console.log("DATA:");
-      console.log(data);
 
       let element = document.getElementById("content");
       element.scrollTop = 0;
@@ -116,7 +115,7 @@
   }
 </style>
 
-<div style="font-family: 'Open Sans', sans-serif;" class="w-full relative bg-gray-100">
+<div style="color: { $settings["reader.theme.text.color"] }; font-family: 'Open Sans', sans-serif; background: { $settings["reader.theme.container.background"] || "#F3F4F6" }" class="transition duration-300 ease-in-out w-full relative">
   <!-- Chapter information -->
   <div class="py-16 text-center">
     <h1 class="text-md font-medium opacity-70">{ data.source.title }</h1>
