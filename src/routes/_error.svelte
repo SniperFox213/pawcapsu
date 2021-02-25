@@ -46,3 +46,16 @@
 <div class="hidden h-1/3"></div>
 <div class="hidden h-2/3"></div>
 <div class="hidden h-3/3"></div>
+
+<div class="hidden w-1/12"></div>
+<div class="hidden w-2/12"></div>
+<div class="hidden w-3/12"></div>
+<div class="hidden w-4/12"></div>
+<div class="hidden w-5/12"></div>
+<div class="hidden w-6/12"></div>
+<div class="hidden w-7/12"></div>
+<div class="hidden w-8/12"></div>
+<div class="hidden w-9/12"></div>
+<div class="hidden w-10/12"></div>
+<div class="hidden w-11/12"></div>
+<div class="hidden w-12/12"></div>
