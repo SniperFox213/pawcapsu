@@ -27,18 +27,76 @@
           previous: data.previousChapter
         };
       };
+
+      let postData = obj["reader/current"];
+
+      if (postData != null) {
+        post = postData.data;
+      };
     });
   });
+
+  function changeTheme(themeName) {
+    settings.setSetting("reader.theme.choosen", themeName);
+
+    let theme = {};
+    
+    if (themeName == "dark") {
+      // Changing theme to dark
+      theme = {
+        "reader.theme.container.background": "#1f1d2b",
+        "reader.theme.text.color": "#fff",
+
+        "reader.theme.header.background": "#1f1d2b",
+        "reader.theme.header.borderColor": "#353340",
+
+        "reader.theme.menu.background": "#1f1d2b",
+        "reader.theme.menu.plateBackground": "#353340",
+
+        "reader.theme.iconColor": "#fff"
+      };
+  
+    } else {
+      theme = {
+        "reader.theme.container.background": "#F3F4F6",
+        "reader.theme.text.color": "#000",
+
+        "reader.theme.header.background": "#F3F4F6",
+        "reader.theme.header.borderColor": "#E5E7EB",
+
+        "reader.theme.menu.background": "#F3F4F6",
+        "reader.theme.menu.plateBackground": "#D1D5DB",
+
+        "reader.theme.iconColor": "#000"
+      };
+    };
+
+    // Updating theme settings
+    for (const key in theme) {
+      if (Object.hasOwnProperty.call(theme, key)) {
+        const element = theme[key];
+        
+        settings.setSetting(key, element);
+      };
+    };
+
+    theme.name = themeName;
+
+    // Saving this theme settings to our cache storage
+    if (post.id != null) cache.setCache(`reader.${ post.id }.theme`, theme);
+  };
+
 
   let menuOpened = false;
   let menuPage   = 0;
 
   let chapters = [];
+  let post = {};
 </script>
 
 <!-- Mobile menu -->
 { #if menuOpened }
-  <div style="z-index: 1000; overflow: hidden; overflow-y: auto; background: { $settings["reader.theme.menu.background"] }; color: { $settings["reader.theme.text.color"] }" class="fixed md:hidden inset-0 w-full h-full mt-16 pb-24">
+  <div style="z-index: 1000; overflow: hidden; overflow-y: auto; background: { $settings["reader.theme.menu.background"] }; color: { $settings["reader.theme.text.color"] }" class="transition duration-300 ease-in-out fixed md:hidden inset-0 w-full h-full mt-16 pb-24">
     { #if menuPage == 0 }
       <!-- Fast-actions -->
       <div class="px-2 py-4">
@@ -53,7 +111,7 @@
           <!-- Reader settings -->
           <div class="w-full p-2">
             <div style="padding-top: 30%" class="w-full relative">
-              <div style="background: { $settings["reader.theme.menu.plateBackground"] }" class="absolute inset-0 w-full h-full rounded-md flex justify-center items-center px-6">
+              <div on:click={(e) => menuPage = 1} style="background: { $settings["reader.theme.menu.plateBackground"] }" class="absolute inset-0 w-full h-full rounded-md flex justify-center items-center px-6">
                 <!-- Image -->
                 <img class="h-2/4" src="./icons/wrench.png" alt="Wrench Icon">
 
@@ -117,7 +175,7 @@
 
                 <!-- Texts -->
                 <div class="ml-6 w-max text-white">
-                  <p class="text-xs opacity-70"><span class="border-b border-dotted border-white">Плейсы</span>. Это одна из немногих особенностей нашего сайта, которую мы очень хочем вам показать!</p>
+                  <p class="text-xs opacity-70"><span class="border-b border-dotted border-white">Плейсы</span>. Это невероятно крутая вещь! Попробуйте сами!</p>
                 
                   <!-- Buttons -->
                   <div class="mt-2 w-full flex justify-center items-center">
@@ -194,17 +252,98 @@
         </div>
       </div>
     { :else if menuPage == 1 }
-      <!-- Настройки -->
-    { :else if menuPage == 2 }
-      <!-- Главы -->
+      <!-- Reader Settings -->
       <div class="px-2 py-4">
         <!-- Back button -->
         <div on:click={(e) => menuPage = 0} class="w-full py-4 flex items-center">
           <Icon name="chevron-left" attrs={{ class: "w-6 h-6 text-light-dark" }} />
 
           <div class="ml-4">
-            <h1 class="text-md text-white">Назад</h1>
-            <p class="text-xs text-gray-100 opacity-80">Вернуться назад, ага да</p>
+            <h1 class="text-md">Назад</h1>
+            <p class="text-xs opacity-80">Вернуться назад, ага да</p>
+          </div>
+        </div>
+
+        <!-- Text size -->
+        <div style="background: { $settings["reader.theme.menu.plateBackground"] }" class="w-full my-4 rounded-md h-32 flex justify-between items-center px-6">
+          <!-- Texts -->
+          <div class="w-1/3">
+            <h1 class="text-base">Шрифт</h1>
+            <p class="text-xs opacity-80">Выберите идеальный размер шрифта</p>
+          </div>
+
+          <!-- Text size -->
+          <div class="w-2/3 flex items-center flex justify-center items-center">
+            <!-- Plus -->
+            <button on:click={(e) => {
+              settings.setSetting("reader.theme.text.size", parseInt($settings["reader.theme.text.size"] || 16) - 1);
+            }}>
+              <Icon name="chevron-down" attrs={{ class: "w-6 h-6 text-whtie" }} />
+            </button>
+
+            <!-- Sample -->
+            <p style="font-size: { $settings["reader.theme.text.size"] }px;" class="mx-2">Aa</p>
+
+            <!-- Minus -->
+            <button on:click={(e) => {
+              settings.setSetting("reader.theme.text.size", parseInt($settings["reader.theme.text.size"] || 16) + 1);
+            }}>
+              <Icon name="chevron-up" attrs={{ class: "w-6 h-6 text-whtie" }} />
+            </button>
+          </div>
+        </div>
+
+        <!-- Theme -->
+        <div style="background: { $settings["reader.theme.menu.plateBackground"] }" class="w-full my-4 rounded-md h-32 flex justify-between items-center px-6">
+          <!-- Texts -->
+          <div class="w-1/3">
+            <h1 class="text-base">Тема</h1>
+            <p class="text-xs opacity-80">Тёмная - что бы глазкам не было больно, светлая... Просто так</p>
+          </div>
+          
+          <!-- Theme picker -->
+          <div class="w-2/3 flex items-center px-6">
+            
+            <!-- Light -->
+            <div class="w-1/2 p-2">
+              <div style="padding-top: 100%;" class="w-full relative">
+                <div on:click={(e) => {
+                  changeTheme("light");
+                }} class="{ $cache[`reader.${ post.id }.theme`] != null ? $cache[`reader.${ post.id }.theme`].name == "light" ? "border-2 border-indigo-400" : "" : "" } absolute inset-0 w-full h-full rounded-md bg-gray-200 flex flex-col justify-center items-center">
+                  <Icon name="sun" attrs={{ class: "w-8 h-8 text-dark" }} />
+
+                  <p class="mt-2 text-dark text-sm">Светлая</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Dark -->
+            <div class="w-1/2 p-2">
+              <div style="padding-top: 100%;" class="w-full relative">
+                <div on:click={(e) => {
+                  changeTheme("dark");
+                }} class="{ $cache[`reader.${ post.id }.theme`] != null ? $cache[`reader.${ post.id }.theme`].name == "dark" ? "border-2 border-indigo-400" : "" : "" } absolute inset-0 w-full h-full rounded-md bg-dark flex flex-col justify-center items-center">
+                  <Icon name="moon" attrs={{ class: "w-8 h-8 text-white" }} />
+
+                  <p class="mt-2 text-white text-sm">Тёмная</p>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+
+    { :else if menuPage == 2 }
+      <!-- Chapters -->
+      <div class="px-2 py-4">
+        <!-- Back button -->
+        <div on:click={(e) => menuPage = 0} class="w-full py-4 flex items-center">
+          <Icon name="chevron-left" attrs={{ class: "w-6 h-6 text-light-dark" }} />
+
+          <div class="ml-4">
+            <h1 class="text-md">Назад</h1>
+            <p class="text-xs opacity-80">Вернуться назад, ага да</p>
           </div>
         </div>
 
@@ -216,13 +355,13 @@
               menuOpened = false;
 
               goto(`/reader/${ $page.params.id }/${ chapter.id }`);
-            }} class="{ chapters.current == chapter.id ? "bg-indigo-400" : "bg-light-dark" } w-full my-4 rounded-md p-3 flex items-center text-white text-sm relative">
+            }} style="{ chapters.current == chapter.id ? "" : `background: ${ $settings["reader.theme.menu.plateBackground"]}` }" class="{ chapters.current == chapter.id ? "bg-indigo-400 text-white" : "" } w-full my-4 rounded-md p-3 flex items-center text-sm relative">
               { chapter.title }
 
               <!-- Status -->
               { #if chapters.current == chapter.id || chapters.next == chapter.id }
                 <div class="absolute inset-y-0 right-0 pr-3 flex items-center">
-                  <p class="text-xs text-gray-100 opacity-80">{ chapters.current == chapter.id ? "Текущая" : "Следующая" }</p>
+                  <p class="text-xs opacity-80">{ chapters.current == chapter.id ? "Текущая" : "Следующая" }</p>
                 </div>
               { /if }
             </div>

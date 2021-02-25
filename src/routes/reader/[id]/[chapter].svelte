@@ -14,7 +14,7 @@
   const { page } = stores();
   
   // Importing components
-  import { Icon, Spinner } from "../../../components";
+  import { Icon } from "../../../components";
 
   function randomInteger(min, max) {
     // получить случайное число от (min-0.5) до (max+0.5)
@@ -164,7 +164,7 @@
   <div class="px-4 md:px-12 h-full relative">
     <!-- Text itself -->
     { #if text != null && loaded }
-      <p in:fade class="opacity-80">{ @html text }</p>
+      <p in:fade style="font-size: { $settings["reader.theme.text.size"] }px;" class="opacity-80">{ @html text }</p>
 
       <!-- End notes -->
       <div class="w-full pt-8">
@@ -172,17 +172,17 @@
         <div style="z-index: 1; background: { $settings["reader.theme.menu.plateBackground"] }" class="w-full flex flex-col items-center justify-center px-4 py-6 rounded-md relative">
           <!-- Header -->
           <div class="absolute inset-x-0 top-0 w-full flex justify-between p-4">
-            <p class="text-sm text-white opacity-80">Конец</p>
+            <p class="text-sm opacity-80">Конец</p>
 
             <button>
-              <Icon name="x" attrs={{ class: "w-5 h-5 text-white" }} />
+              <Icon name="x" attrs={{ class: "w-5 h-5" }} />
             </button>
           </div>
           
           <!-- Text -->
           <div class="mt-6 text-center">
-            <h1 class="text-2xl text-white">Главы</h1>
-            <p class="text-sm text-gray-100 opacity-80">Этот рассказ ещё не закончился! Продолжайте читать его и наслаждаться потрясающим сюжетом! Не забудьте заглянутьв <span class="border-b border-dotted border-gray-100">Плейс</span> этого рассказа.</p>
+            <h1 class="text-2xl">Главы</h1>
+            <p class="text-sm opacity-80">Этот рассказ ещё не закончился! Продолжайте читать его и наслаждаться потрясающим сюжетом! Не забудьте заглянутьв <span class="border-b border-dotted border-gray-100">Плейс</span> этого рассказа.</p>
           </div>
 
           <!-- Chapters list -->
@@ -233,14 +233,14 @@
 
           <!-- Dots -->
           <div class="absolute inset-x-0 bottom-0 w-full flex items-center opacity-60 justify-center py-4">
-            <div class="w-4 h-4 bg-white rounded-full mx-2"></div>
-            <div class="w-3 h-3 border-2 border-white rounded-full mx-2"></div>
+            <div style="background: { $settings["reader.theme.text.color"] }" class="w-4 h-4 rounded-full mx-2"></div>
+            <div style="border-color: { $settings["reader.theme.text.color"] }" class="w-3 h-3 border-2 rounded-full mx-2"></div>
           </div>
         </div>
 
         <div class="w-full mt-4 flex justify-end items-center">
-          <div class="opacity-80 rounded-md px-2 py-0.5 bg-light-dark mr-2">
-            <p class="text-xs text-gray-100">Нажми на второй кружочек, дружочек<br />У меня есть что тебе показать...</p>
+          <div style="background-color: { $settings["reader.theme.menu.plateBackground"] }" class="opacity-80 rounded-md px-2 py-0.5 mr-2">
+            <p class="text-xs">Нажми на второй кружочек, дружочек<br />У меня есть что тебе показать...</p>
           </div>
 
           <img class="w-1/6 rounded-md" src="./stickers/0/32.png" alt="">

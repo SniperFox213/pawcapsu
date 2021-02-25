@@ -21,7 +21,7 @@ const store = () => {
         },
         
         text: {
-          size: "16px",
+          size: 16,
           color: "inherit",
           opacity: 80
         }
