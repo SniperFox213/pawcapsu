@@ -39,13 +39,17 @@
   });
 
   function changeTheme(themeName) {
-    settings.setSetting("reader.theme.choosen", themeName);
+    settings.setSetting("reader.theme.choosen", true);
+    settings.setSetting("reader.theme.name", themeName);
 
     let theme = {};
     
     if (themeName == "dark") {
       // Changing theme to dark
       theme = {
+        "reader.theme.choosen": true,
+        "reader.theme.name": themeName,
+
         "reader.theme.container.background": "#1f1d2b",
         "reader.theme.text.color": "#fff",
 
@@ -60,6 +64,9 @@
   
     } else {
       theme = {
+        "reader.theme.choosen": true,
+        "reader.theme.name": themeName,
+
         "reader.theme.container.background": "#F3F4F6",
         "reader.theme.text.color": "#000",
 
@@ -81,8 +88,6 @@
         settings.setSetting(key, element);
       };
     };
-
-    theme.name = themeName;
 
     // Saving this theme settings to our cache storage
     if (post.id != null) cache.setCache(`reader.${ post.id }.theme`, theme);
@@ -426,7 +431,7 @@
             <div class="w-1/2 mx-2">
               <div on:click={(e) => {
                 changeTheme("light");
-              }} class="{ $cache[`reader.${ post.id }.theme`] != null ? $cache[`reader.${ post.id }.theme`].name == "light" ? "border-2 border-indigo-400" : "" : "" } w-full h-8 rounded-md bg-gray-200 flex justify-center items-center">
+              }} class="{ $cache[`reader.${ post.id }.theme`] != null ? $cache[`reader.${ post.id }.theme`]["reader.theme.name"] == "light" ? "border-2 border-indigo-400" : "" : "" } w-full h-8 rounded-md bg-gray-200 flex justify-center items-center">
                 <Icon name="sun" attrs={{ class: "w-5 h-5 text-dark" }} />
 
                 <p class="ml-2 text-dark text-sm">Светлая</p>
@@ -437,7 +442,7 @@
             <div class="w-1/2 mx-2">
               <div on:click={(e) => {
                 changeTheme("dark");
-              }} class="{ $cache[`reader.${ post.id }.theme`] != null ? $cache[`reader.${ post.id }.theme`].name == "dark" ? "border-2 border-indigo-400" : "" : "" } w-full h-8 rounded-md bg-dark flex justify-center items-center">
+              }} class="{ $cache[`reader.${ post.id }.theme`] != null ? $cache[`reader.${ post.id }.theme`]["reader.theme.name"] == "dark" ? "border-2 border-indigo-400" : "" : "" } w-full h-8 rounded-md bg-dark flex justify-center items-center">
                 <Icon name="moon" attrs={{ class: "w-5 h-5 text-white" }} />
 
                 <p class="ml-2 text-white text-sm">Тёмная</p>
@@ -508,7 +513,7 @@
       { /if }
     { :else }
 
-      { #if $settings["reader.theme.choosen"] == "dark" }
+      { #if $settings["reader.theme.name"] == "dark" }
         <img class="w-7 h-7" src="https://res.cloudinary.com/lococovu-cdn/image/upload/v1610810215/logotypes/pawcapsu-white-small.svg" alt="pawcapsu logotype">
       { :else }
         <img class="w-7 h-7" src="https://res.cloudinary.com/lococovu-cdn/image/upload/v1614110162/logotypes/pawcapsu-black-small.svg" alt="pawcapsu logotype">

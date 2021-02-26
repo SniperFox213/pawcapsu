@@ -149,13 +149,13 @@
     { :else }
       <div in:fade class="flex flex-col items-center justify-center">
         <div class="w-1/3 flex relative">
-          <div class="w-{ randomInteger(1, 4) }/12 mx-2 rounded-full bg-light-dark h-4 my-2"></div>
-          <div class="w-full mx-2 rounded-full bg-light-dark h-4 my-2"></div>
+          <div style="background: { $settings["reader.theme.menu.plateBackground"] }" class="w-{ randomInteger(1, 4) }/12 mx-2 rounded-full h-4 my-2"></div>
+          <div style="background: { $settings["reader.theme.menu.plateBackground"] }" class="w-full mx-2 rounded-full h-4 my-2"></div>
         </div>
 
         <div class="w-full flex relative px-6">
-          <div class="w-{ randomInteger(1, 4) }/12 mx-2 rounded-full bg-light-dark h-8 my-2"></div>
-          <div class="w-full mx-2 rounded-full bg-light-dark h-8 my-2"></div>
+          <div style="background: { $settings["reader.theme.menu.plateBackground"] }" class="w-{ randomInteger(1, 4) }/12 mx-2 rounded-full h-8 my-2"></div>
+          <div style="background: { $settings["reader.theme.menu.plateBackground"] }" class="w-full mx-2 rounded-full h-8 my-2"></div>
         </div>
       </div>
     { /if }
@@ -251,8 +251,8 @@
       <div class="flex flex-wrap w-full relative">
         { #each new Array(20) as i }
           <div in:fade class="w-full flex relative">
-            <div class="w-{ randomInteger(1, 10) }/12 mx-2 rounded-full bg-light-dark h-6 my-2"></div>
-            <div class="w-full mx-2 rounded-full bg-light-dark h-6 my-2"></div>
+            <div style="background: { $settings["reader.theme.menu.plateBackground"] }" class="w-{ randomInteger(1, 10) }/12 mx-2 rounded-full h-6 my-2"></div>
+            <div style="background: { $settings["reader.theme.menu.plateBackground"] }" class="w-full mx-2 rounded-full h-6 my-2"></div>
           </div>
         { /each }
       </div>

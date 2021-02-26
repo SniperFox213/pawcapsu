@@ -1,6 +1,5 @@
 <script>
   // Importing modules
-  import { fade } from "svelte/transition";
   import { onMount } from "svelte";
   import axios from "axios";
 
@@ -11,9 +10,11 @@
   const { page } = stores();
 
   // Importing components
-  import { Spinner, Icon } from "../../../components";
+  import { Icon } from "../../../components";
 
   onMount(async () => {
+    console.log("MOUNT");
+
     // Loding text information
     axios.get(`https://v1.api.paw.unfull.ml/api/post/${ $page.params.id }?extended=true`)
     .then((response ) => {
@@ -27,32 +28,41 @@
       post    = data;
       loading = false;
 
+      // Settings store
+      changeTheme("dark", false);
+
       // Getting reader settings
       if ($cache[`reader.${ data.id }.theme`] != null) {
         let theme = $cache[`reader.${ data.id }.theme`];
 
         for (const key in theme) {
-          settings.setSetting("reader.theme.choosen", theme.name);
-
           if (Object.hasOwnProperty.call(theme, key)) {
             const element = theme[key];
             
+            console.log("SET SETTING");
+            console.log(key);
             settings.setSetting(key, element);
           };
         };
+
+        console.log("SETTINGS:");
+        console.log($settings);
       };
     }).catch(() => {
     });
   });
 
-  function changeTheme(themeName) {
-    settings.setSetting("reader.theme.choosen", themeName);
+  function changeTheme(themeName, save = true) {
+    if (save) settings.setSetting("reader.theme.choosen", true); 
+    settings.setSetting("reader.theme.name", themeName);
 
     let theme = {};
     
     if (themeName == "dark") {
       // Changing theme to dark
       theme = {
+        "reader.theme.name": themeName,
+
         "reader.theme.container.background": "#1f1d2b",
         "reader.theme.text.color": "#fff",
 
@@ -67,6 +77,8 @@
   
     } else {
       theme = {
+        "reader.theme.name": themeName,
+
         "reader.theme.container.background": "#F3F4F6",
         "reader.theme.text.color": "#000",
 
@@ -89,22 +101,17 @@
       };
     };
 
-    theme.name = themeName;
+    if (save) theme["reader.theme.choosen"] = true;
 
     // Saving this theme settings to our cache storage
-    if (post.id != null) cache.setCache(`reader.${ post.id }.theme`, theme);
+    if (post.id != null && save) cache.setCache(`reader.${ post.id }.theme`, theme);
   };
 
   let post    = {};
   let loading = true;
 </script>
 
-{ #if loading }
-  <!-- Loading screen -->
-  <div out:fade style="z-index: 999;" class="absolute bg-white inset-0 w-full h-full flex justify-center items-center">
-    <Spinner />
-  </div>
-{ :else }
+{ #if !loading }
   <!-- Choose theme (if not choosen) -->
   { #if !$settings["reader.theme.choosen"] }
     <!-- Background -->
@@ -152,7 +159,7 @@
 
           <!-- Light Theme -->
           <div class="w-full h-16 mx-2 relative flex items-end">
-            { #if $cache[`reader.${ post.id }.theme`] != null ? $cache[`reader.${ post.id }.theme`].name == "dark" : false }
+            { #if $cache[`reader.${ post.id }.theme`] != null ? $cache[`reader.${ post.id }.theme`].name == "light" : false }
               <div class="absolute top-0 right-0">
                 <p class="text-xs text-indigo-400">Выбранная</p>
               </div>

@@ -30,7 +30,7 @@
 			cache.initializeCache()
 			.then(() => {
 				// Initializing socket connection
-				socket.initializeConnection();
+				// socket.initializeConnection();
 
 				setTimeout(() => loaded = true, 250);
 			

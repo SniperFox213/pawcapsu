@@ -5,29 +5,7 @@ import cache from "../cache";
 // Store itself
 const store = () => {
   // Getting some required methods
-  let obj = {
-    reader: {
-      theme: {
-        choosen: false,
-
-        // Needed values
-        iconColor: "#000",
-        header: {
-          background: "#1f1d2b"
-        },
-
-        container: {
-          background: "#1f1d2b",
-        },
-        
-        text: {
-          size: 16,
-          color: "inherit",
-          opacity: 80
-        }
-      }
-    }
-  };
+  let obj = {};
 
   // TODO
   // Get all user settings from cloud
