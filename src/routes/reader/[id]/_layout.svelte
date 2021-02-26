@@ -13,8 +13,6 @@
   import { Icon } from "../../../components";
 
   onMount(async () => {
-    console.log("MOUNT");
-
     // Loding text information
     axios.get(`https://v1.api.paw.unfull.ml/api/post/${ $page.params.id }?extended=true`)
     .then((response ) => {
@@ -53,7 +51,7 @@
   });
 
   function changeTheme(themeName, save = true) {
-    if (save) settings.setSetting("reader.theme.choosen", true); 
+    settings.setSetting("reader.theme.choosen", save); 
     settings.setSetting("reader.theme.name", themeName);
 
     let theme = {};
