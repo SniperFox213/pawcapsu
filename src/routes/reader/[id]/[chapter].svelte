@@ -138,7 +138,7 @@
   }
 </style>
 
-<div style="color: { $settings["reader.theme.text.color"] }; font-family: 'Open Sans', sans-serif; background: { $settings["reader.theme.container.background"] || "#F3F4F6" }" class="transition duration-300 ease-in-out w-full relative">
+<div style="color: { $settings["reader.theme.text.color"] }; font-family: 'Open Sans', sans-serif; background: { $settings["reader.theme.container.background"] }" class="transition duration-300 ease-in-out w-full relative">
   <!-- Chapter information -->
   <div class="py-16 text-center">
     <!-- Chapter title -->

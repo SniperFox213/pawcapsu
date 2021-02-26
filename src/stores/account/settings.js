@@ -11,13 +11,13 @@ const store = () => {
         choosen: false,
 
         // Needed values
-        iconColor: "#fff",
+        iconColor: "#000",
         header: {
-          background: "#fff"
+          background: "#1f1d2b"
         },
 
         container: {
-          background: "#F3F4F6",
+          background: "#1f1d2b",
         },
         
         text: {

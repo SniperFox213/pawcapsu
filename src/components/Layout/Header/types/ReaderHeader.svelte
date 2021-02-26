@@ -90,6 +90,9 @@
   let menuOpened = false;
   let menuPage   = 0;
 
+  let summaryExpanded = false;
+  let tagsExpanded = false;
+
   let chapters = [];
   let post = {};
 </script>
@@ -98,6 +101,129 @@
 { #if menuOpened }
   <div style="z-index: 1000; overflow: hidden; overflow-y: auto; background: { $settings["reader.theme.menu.background"] }; color: { $settings["reader.theme.text.color"] }" class="transition duration-300 ease-in-out fixed md:hidden inset-0 w-full h-full mt-16 pb-24">
     { #if menuPage == 0 }
+      <!-- Text nameSummary -->
+      <div class="w-full px-2 py-4">
+        <div style="background: { $settings["reader.theme.menu.plateBackground"] }" class="transition duration-300 ease-in-out w-full rounded-md { summaryExpanded ? "h-auto" : "h-64" } overflow-hidden py-4 relative">
+          <!-- Settings -->
+          <div class="absolute w-full flex justify-between inset-x-0 top-0 p-4">
+            <p class="text-sm opacity-80">Вы читаете</p>
+
+            <Icon name="more-horizontal" attrs={{ class: "w-4 h-4" }}/>
+          </div>
+
+          <!-- Content -->
+          <div class="my-10">
+            <!-- Author -->
+            <div class="flex items-center px-4">
+              <div class="w-5 h-5 rounded-full bg-indigo-400"></div>
+            
+              <a href="/" style="border-color: { $settings["reader.theme.text.color"] };" class="ml-1 text-xs border-b border-dotted">{ post != null ? post.author.nickname : "" }</a>
+            </div>
+
+            <!-- Title -->
+            <h1 class="text-2xl mt-0.5 px-4">{ post != null ? post.source.title : "" }</h1>
+
+            <!-- Description -->
+            <div class="{ post.source.description.split(" ").length > 100 ? "h-48 overflow-hidden overflow-y-auto" : "h-auto" } w-full mt-4 px-4">
+              <p>{ @html post.source.description }</p>
+            </div>
+
+            <!-- Tags? -->
+            <div class="mt-4 px-2">
+              <div style="height: 0.05rem;" class="w-full bg-gray-100 opacity-40 px-4"></div>
+
+              { #if post != null && post.meta.tags != null && post.meta.tags.length > 0 }
+
+                <!-- Warning -->
+                <div class="my-3">
+                  <p class="text-sm uppercase px-2">Предупреждения</p>
+
+                  <div class="w-full flex flex-wrap mt-2">
+                    { #each post.meta.tags.filter((x) => x.type == "warning") as tag }
+                      <div class="mx-1 my-0.5 px-2 py-0.5 rounded-full bg-red-400 text-xs">
+                        { tag.text }
+                      </div>
+                    { /each }
+                  </div>
+                </div>
+
+                { #if tagsExpanded }
+                  <!-- Relationships -->
+                  <div class="my-3">
+                    <p class="text-sm uppercase px-2">Пэйринги</p>
+
+                    <div class="w-full flex flex-wrap mt-2">
+                      { #each post.meta.tags.filter((x) => x.type == "relationship") as tag }
+                        <div class="mx-1 my-0.5 px-2 py-0.5 rounded-full bg-pink-400 text-xs">
+                          { tag.text }
+                        </div>
+                      { /each }
+                    </div>
+                  </div>
+
+                  <!-- Characters -->
+                  <div class="my-3">
+                    <p class="text-sm uppercase px-2">Персонажи</p>
+
+                    <div class="w-full flex flex-wrap mt-2">
+                      { #each post.meta.tags.filter((x) => x.type == "characters") as tag }
+                        <div class="mx-1 my-0.5 px-2 py-0.5 rounded-full bg-indigo-400 text-xs">
+                          { tag.text }
+                        </div>
+                      { /each }
+                    </div>
+                  </div>
+
+                  <!-- Freeform -->
+                  <div class="my-3">
+                    <p class="text-sm uppercase px-2">Другие теги</p>
+
+                    <div class="w-full flex flex-wrap mt-2">
+                      { #each post.meta.tags.filter((x) => x.type == "freeform") as tag }
+                        <div class="mx-1 my-0.5 px-2 py-0.5 rounded-full bg-dark text-xs">
+                          { tag.text }
+                        </div>
+                      { /each }
+                    </div>
+                  </div>
+                { /if }
+
+                <div on:click={(e) => {
+                  if (tagsExpanded) {
+                    tagsExpanded = false;
+                  } else {
+                    tagsExpanded = true;
+                  };
+                }} class="w-full flex items-center justify-center py-2 rounded-md bg-dark mt-2 px-2">
+                  { #if tagsExpanded }
+                    <Icon name="chevron-up" attrs={{ class: "w-5 h-5" }} />
+
+                    <p class="text-sm ml-2">Скрыть</p>
+                  { :else }
+                    <Icon name="more-horizontal" attrs={{ class: "w-5 h-5" }} />
+
+                    <p class="text-sm ml-2">Больше тегов <span style="border-color: { $settings["reader.theme.text.color"] }" class="border-b border-dotted">({ post.meta.tags.length })</span></p>
+                  { /if }                
+                </div>
+              { /if }
+            </div>
+          </div>
+
+          <!-- Show more -->
+          <div style="background-color: { $settings["reader.theme.menu.plateBackground"] }" class="absolute inset-x-0 bottom-0 flex justify-center items-center p-4">
+            <button on:click={(e) => {
+              if (summaryExpanded) {
+                summaryExpanded = false;
+              } else {
+                summaryExpanded = true;
+              };
+            }} class="">
+              <Icon name="{ summaryExpanded ? "chevron-up" : "chevron-down" }" attrs={{ class: "w-5 h-5" }} />
+            </button>
+          </div>
+        </div>
+      </div>
+
       <!-- Fast-actions -->
       <div class="px-2 py-4">
         <!-- Title -->
@@ -294,39 +420,35 @@
         </div>
 
         <!-- Theme -->
-        <div style="background: { $settings["reader.theme.menu.plateBackground"] }" class="w-full my-4 rounded-md h-32 flex justify-between items-center px-6">
+        <div style="background: { $settings["reader.theme.menu.plateBackground"] }" class="w-full my-4 rounded-md py-4 flex flex-col justify-between items-center px-6">
           <!-- Texts -->
-          <div class="w-1/4">
+          <div class="text-center">
             <h1 class="text-xl">Тема</h1>
-            <!-- <p class="text-xs opacity-80">Тёмная - что бы глазкам не было больно, светлая... Просто так</p> -->
+            <p class="text-sm opacity-80">Тёмная - что бы глазкам не было больно, светлая... Просто так</p>
           </div>
           
           <!-- Theme picker -->
-          <div class="w-3/4 flex justify-center items-center px-2">
+          <div class="w-full flex justify-center items-center mt-2">
             
             <!-- Light -->
-            <div class="w-1/2 p-2">
-              <div style="padding-top: 100%;" class="w-full relative">
-                <div on:click={(e) => {
-                  changeTheme("light");
-                }} class="{ $cache[`reader.${ post.id }.theme`] != null ? $cache[`reader.${ post.id }.theme`].name == "light" ? "border-2 border-indigo-400" : "" : "" } absolute inset-0 w-full h-full rounded-md bg-gray-200 flex flex-col justify-center items-center">
-                  <Icon name="sun" attrs={{ class: "w-8 h-8 text-dark" }} />
+            <div class="w-1/2 mx-2">
+              <div on:click={(e) => {
+                changeTheme("light");
+              }} class="{ $cache[`reader.${ post.id }.theme`] != null ? $cache[`reader.${ post.id }.theme`].name == "light" ? "border-2 border-indigo-400" : "" : "" } w-full h-8 rounded-md bg-gray-200 flex justify-center items-center">
+                <Icon name="sun" attrs={{ class: "w-5 h-5 text-dark" }} />
 
-                  <p class="mt-2 text-dark text-sm">Светлая</p>
-                </div>
+                <p class="ml-2 text-dark text-sm">Светлая</p>
               </div>
             </div>
 
             <!-- Dark -->
-            <div class="w-1/2 p-2">
-              <div style="padding-top: 100%;" class="w-full relative">
-                <div on:click={(e) => {
-                  changeTheme("dark");
-                }} class="{ $cache[`reader.${ post.id }.theme`] != null ? $cache[`reader.${ post.id }.theme`].name == "dark" ? "border-2 border-indigo-400" : "" : "" } absolute inset-0 w-full h-full rounded-md bg-dark flex flex-col justify-center items-center">
-                  <Icon name="moon" attrs={{ class: "w-8 h-8 text-white" }} />
+            <div class="w-1/2 mx-2">
+              <div on:click={(e) => {
+                changeTheme("dark");
+              }} class="{ $cache[`reader.${ post.id }.theme`] != null ? $cache[`reader.${ post.id }.theme`].name == "dark" ? "border-2 border-indigo-400" : "" : "" } w-full h-8 rounded-md bg-dark flex justify-center items-center">
+                <Icon name="moon" attrs={{ class: "w-5 h-5 text-white" }} />
 
-                  <p class="mt-2 text-white text-sm">Тёмная</p>
-                </div>
+                <p class="ml-2 text-white text-sm">Тёмная</p>
               </div>
             </div>
             
