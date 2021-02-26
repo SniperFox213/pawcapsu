@@ -182,7 +182,7 @@
           <!-- Text -->
           <div class="mt-6 text-center">
             <h1 class="text-2xl">Главы</h1>
-            <p class="text-sm opacity-80">Этот рассказ ещё не закончился! Продолжайте читать его и наслаждаться потрясающим сюжетом! Не забудьте заглянутьв <span class="border-b border-dotted border-gray-100">Плейс</span> этого рассказа.</p>
+            <p class="text-sm opacity-80">Этот рассказ ещё не закончился! Продолжайте читать его и наслаждаться потрясающим сюжетом! Не забудьте заглянутьв <span style="border-color: { $settings["reader.theme.text.color"] }" class="border-b border-dotted">Плейс</span> этого рассказа.</p>
           </div>
 
           <!-- Chapters list -->
@@ -195,13 +195,13 @@
 
                 if (ids.find((x) => x != null ? x.id == $page.params.chapter || x.id == nextChapter || x.id == previousChapter : false)) return true;
               }) as chapter }
-                <div on:click={(e) => goto(`/reader/${ $page.params.id }/${ chapter.id }`)} class="{ $page.params.chapter == chapter.id ? "bg-indigo-400" : "bg-dark" } w-full my-4 rounded-md p-3 flex items-center text-white text-sm relative">
+                <div style="background: { $page.params.chapter != chapter.id ? $settings["reader.theme.menu.background"] : "" };" on:click={(e) => goto(`/reader/${ $page.params.id }/${ chapter.id }`)} class="{ $page.params.chapter == chapter.id ? "bg-indigo-400 text-white" : "" } w-full my-4 rounded-md p-3 flex items-center text-sm relative">
                   { chapter.title }
     
                   <!-- Status -->
                   { #if $page.params.chapter == chapter.id || nextChapter == chapter.id }
                     <div class="absolute inset-y-0 right-0 pr-3 flex items-center">
-                      <p class="text-xs text-gray-100 opacity-80">{ $page.params.chapter == chapter.id ? "Текущая" : "Следующая" }</p>
+                      <p class="text-xs opacity-80">{ $page.params.chapter == chapter.id ? "Текущая" : "Следующая" }</p>
                     </div>
                   { /if }
                 </div>
@@ -214,19 +214,19 @@
           <div class="my-6 mb-12 w-full flex justify-center items-center">
             <!-- Previous chapter -->
             { #if previousChapter != null }
-              <button on:click={(e) => goto(`/reader/${ $page.params.id }/${ previousChapter }`)} class="w-full rounded-md bg-dark flex justify-center items-center py-3 my-3">
-                <Icon name="chevron-left" attrs={{ class: "w-5 h-5 text-white" }} />
+              <button style="background: { $settings["reader.theme.menu.background"] };" on:click={(e) => goto(`/reader/${ $page.params.id }/${ previousChapter }`)} class="w-full rounded-md flex justify-center items-center py-3 my-3">
+                <Icon name="chevron-left" attrs={{ class: "w-5 h-5" }} />
 
-                <p class="text-sm text-white ml-2">Предыдущая <span class="hidden md:block">глава</span></p>
+                <p class="text-sm ml-2">Предыдущая <span class="hidden md:block">глава</span></p>
               </button>
             { /if }
 
             <!-- Next Chapter -->
             { #if nextChapter != null }
-              <button on:click={(e) => goto(`/reader/${ $page.params.id }/${ nextChapter }`)} class="{ previousChapter != null ? "ml-3" : "" } w-full rounded-md bg-dark flex justify-center items-center py-3 my-3">
-                <p class="text-sm text-white mr-2">Следующая <span class="hidden md:block">глава</span></p>
+              <button style="background: { $settings["reader.theme.menu.background"] };" on:click={(e) => goto(`/reader/${ $page.params.id }/${ nextChapter }`)} class="{ previousChapter != null ? "ml-3" : "" } w-full rounded-md flex justify-center items-center py-3 my-3">
+                <p class="text-sm mr-2">Следующая <span class="hidden md:block">глава</span></p>
 
-                <Icon name="chevron-right" attrs={{ class: "w-5 h-5 text-white" }} />
+                <Icon name="chevron-right" attrs={{ class: "w-5 h-5" }} />
               </button>
             { /if }
           </div>

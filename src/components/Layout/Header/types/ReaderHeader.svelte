@@ -1,5 +1,7 @@
 <script>
   // Importing modules
+  import { fade, slide } from "svelte/transition";
+
   import { goto } from "@sapper/app";
   import { onMount } from "svelte";
 
@@ -102,7 +104,7 @@
   <div style="z-index: 1000; overflow: hidden; overflow-y: auto; background: { $settings["reader.theme.menu.background"] }; color: { $settings["reader.theme.text.color"] }" class="transition duration-300 ease-in-out fixed md:hidden inset-0 w-full h-full mt-16 pb-24">
     { #if menuPage == 0 }
       <!-- Text nameSummary -->
-      <div class="w-full px-2 py-4">
+      <div in:fade class="w-full px-2 py-4">
         <div style="background: { $settings["reader.theme.menu.plateBackground"] }" class="transition duration-300 ease-in-out w-full rounded-md { summaryExpanded ? "h-auto" : "h-64" } overflow-hidden py-4 relative">
           <!-- Settings -->
           <div class="absolute w-full flex justify-between inset-x-0 top-0 p-4">
@@ -180,7 +182,7 @@
 
                     <div class="w-full flex flex-wrap mt-2">
                       { #each post.meta.tags.filter((x) => x.type == "freeform") as tag }
-                        <div class="mx-1 my-0.5 px-2 py-0.5 rounded-full bg-dark text-xs">
+                        <div style="background: { $settings["reader.theme.menu.background"] }" class="mx-1 my-0.5 px-2 py-0.5 rounded-full text-xs">
                           { tag.text }
                         </div>
                       { /each }
@@ -194,7 +196,7 @@
                   } else {
                     tagsExpanded = true;
                   };
-                }} class="w-full flex items-center justify-center py-2 rounded-md bg-dark mt-2 px-2">
+                }} style="background: { $settings["reader.theme.menu.background"] }" class="w-full flex items-center justify-center py-2 rounded-md mt-2 px-2">
                   { #if tagsExpanded }
                     <Icon name="chevron-up" attrs={{ class: "w-5 h-5" }} />
 
@@ -225,7 +227,7 @@
       </div>
 
       <!-- Fast-actions -->
-      <div class="px-2 py-4">
+      <div in:fade class="px-2 py-4">
         <!-- Title -->
         <div class="mx-2 w-full border-b-2 border-indigo-400 py-2">
           <h1 class="text-2xl ">Быстрые действия</h1>
@@ -320,7 +322,7 @@
       </div>
 
       <!-- Site Pages -->
-      <div class="px-2 py-4">
+      <div in:fade class="px-2 py-4">
         <!-- Title -->
         <div class="mx-2 w-full border-b-2 border-indigo-400 py-2">
           <h1 class="text-2xl">Навигация</h1>
@@ -379,45 +381,35 @@
       </div>
     { :else if menuPage == 1 }
       <!-- Reader Settings -->
-      <div class="px-2 py-4">
-        <!-- Back button -->
-        <div on:click={(e) => menuPage = 0} class="w-full py-4 flex items-center">
-          <Icon name="chevron-left" attrs={{ class: "w-6 h-6 text-light-dark" }} />
-
-          <div class="ml-4">
-            <h1 class="text-md">Назад</h1>
-            <p class="text-xs opacity-80">Вернуться назад, ага да</p>
-          </div>
-        </div>
-
+      <div in:fade class="px-2 py-4">
         <!-- Text size -->
-        <div style="background: { $settings["reader.theme.menu.plateBackground"] }" class="w-full my-4 rounded-md h-32 flex justify-between items-center px-6">
-          <!-- Texts -->
+        <!-- <div style="background: { $settings["reader.theme.menu.plateBackground"] }" class="w-full my-4 rounded-md h-32 flex justify-between items-center px-6">
+          #Texts
           <div class="w-1/4">
             <h1 class="text-xl">Шрифт</h1>
-            <!-- <p class="text-xs opacity-80">Выберите идеальный размер шрифта</p> -->
+            #<p class="text-xs opacity-80">Выберите идеальный размер шрифта</p>
           </div>
 
-          <!-- Text size -->
+          #Text size
           <div class="w-3/4 flex items-center flex justify-center items-center">
-            <!-- Plus -->
+            #Plus
             <button on:click={(e) => {
               settings.setSetting("reader.theme.text.size", parseInt($settings["reader.theme.text.size"] || 16) - 1);
             }}>
               <Icon name="chevron-down" attrs={{ class: "w-6 h-6 text-whtie" }} />
             </button>
 
-            <!-- Sample -->
+            #Sample
             <p style="font-size: { $settings["reader.theme.text.size"] }px;" class="mx-2">Aa</p>
 
-            <!-- Minus -->
+            #Minus
             <button on:click={(e) => {
               settings.setSetting("reader.theme.text.size", parseInt($settings["reader.theme.text.size"] || 16) + 1);
             }}>
               <Icon name="chevron-up" attrs={{ class: "w-6 h-6 text-whtie" }} />
             </button>
           </div>
-        </div>
+        </div> -->
 
         <!-- Theme -->
         <div style="background: { $settings["reader.theme.menu.plateBackground"] }" class="w-full my-4 rounded-md py-4 flex flex-col justify-between items-center px-6">
@@ -458,17 +450,7 @@
 
     { :else if menuPage == 2 }
       <!-- Chapters -->
-      <div class="px-2 py-4">
-        <!-- Back button -->
-        <div on:click={(e) => menuPage = 0} class="w-full py-4 flex items-center">
-          <Icon name="chevron-left" attrs={{ class: "w-6 h-6 text-light-dark" }} />
-
-          <div class="ml-4">
-            <h1 class="text-md">Назад</h1>
-            <p class="text-xs opacity-80">Вернуться назад, ага да</p>
-          </div>
-        </div>
-
+      <div in:fade class="px-2 py-4">
         <!-- List -->
         <div class="w-full">
           { #each chapters.list as chapter }
@@ -499,13 +481,31 @@
   <!-- Pawcapsu Logotype (mobile) -->
   <div on:click={(e) => {
     if (menuOpened) {
-      menuOpened = false;
+      if (menuPage != 0) {
+        menuPage   = 0;
+      } else {
+        menuOpened = false;
+        menuPage   = 0;
+      };
     } else {
       menuOpened = true;
     };
   }} style="z-index: 1000;" class="absolute cursor-pointer inset-0 md:left-0 flex justify-center items-center px-6">
     { #if menuOpened }
-      <Icon name="x" attrs={{ style: `color: ${ $settings["reader.theme.iconColor"] }`, class: "w-7 h-7" }}/>
+      <!-- Back Button (if needed) -->
+      { #if menuPage != 0 }
+        <!-- Back button -->
+        <div in:fade style="color: { $settings["reader.theme.text.color"] }" class="w-full py-4 flex items-center">
+          <Icon name="chevron-left" attrs={{ class: "w-6 h-6" }} />
+
+          <div class="ml-4">
+            <h1 class="text-md">Назад</h1>
+            <p class="text-xs opacity-80">Вернуться назад, ага да</p>
+          </div>
+        </div>
+      { :else }
+        <Icon name="x" attrs={{ style: `color: ${ $settings["reader.theme.iconColor"] }`, class: "w-7 h-7" }}/>
+      { /if }
     { :else }
 
       { #if $settings["reader.theme.choosen"] == "dark" }
