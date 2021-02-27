@@ -140,23 +140,34 @@
         </div>
 
         <!-- Tags -->
-        <div class="my-4 px-4 w-full flex justify-center items-center">
-          <div class="mx-1 px-2 py-0.5 rounded-full bg-red-400 opacity-70">
-            <p class="text-xs text-white">Smut</p>
-          </div>
-          
-          <div class="mx-1 px-2 py-0.5 rounded-full bg-dark opacity-60">
-            <p class="text-xs text-white">Fluff</p>
-          </div>
+        <div class="my-4 px-4 w-full flex flex-wrap justify-center items-center">
+          { #if entry.meta.tags != null && entry.meta.tags.length > 0 }
+            <!-- Warnings -->
+            { #each entry.meta.tags.filter((x) => x.type == "warning" && !x.text.includes("Archive")) as tag }
+              <div class="mx-1 px-2 py-0.5 rounded-full bg-red-400 opacity-70">
+                <p class="text-xs text-white">{ tag.text }</p>
+              </div>
+            { /each }
+            
+            <!-- Relationships -->
+            { #each entry.meta.tags.filter((x) => x.type == "relationship").slice(0,2) as tag }
+              <div class="mx-1 my-0.5 px-2 py-0.5 rounded-full bg-pink-400 text-white text-xs opacity-70">
+                { tag.text }
+              </div>
+            { /each }
 
-          <div class="mx-1 px-2 py-0.5 rounded-full bg-dark opacity-60">
-            <p class="text-xs text-white">Angst</p>
-          </div>
-          
-          <div class="mx-1 px-2 py-0.5 rounded-full bg-dark opacity-60">
-            <p class="text-xs text-white">Platonic ...</p>
-          </div>
-          
+            <!-- Freeform (first two) -->
+            { #each entry.meta.tags.filter((x) => x.type == "freeform").slice(0,2) as tag }
+              <div class="mx-1 my-0.5 px-2 py-0.5 rounded-full bg-dark text-white text-xs opacity-70">
+                { tag.text }
+              </div>
+            { /each }
+
+            <!-- Show all button -->
+            <div class="mx-1 my-0.5 px-2 py-0.5 rounded-full bg-dark text-white text-xs opacity-70">
+              Показать все
+            </div>
+          { /if }
         </div>
         
         <!-- Description  -->

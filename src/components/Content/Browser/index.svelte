@@ -21,7 +21,7 @@
   // Fetching data
 	async function fetchData(forcedUpdate = false) {
     if (!loading) {
-      let element = document.getElementById("list");
+      let element = document.scrollingElement;
       
       // Let's firstly check if we have any cached data
       if ($cache[`browser.${types}`] && !forcedUpdate) {
@@ -105,7 +105,7 @@
     fetchData();
 
     // Implementing infinite scrolling features
-    let element = document.getElementById("list");
+    let element = document.scrollingElement;
 
     element.addEventListener("scroll", () => {
       // Saving scroll position
@@ -182,7 +182,7 @@
 
 <div class="w-full h-full flex flex-wrap items-center md:px-6">
   { #if !readyToShow }
-    <div style="z-index: 999;" out:fade class="bg-dark absolute inset-0 w-full h-full flex justify-center items-center">
+    <div style="z-index: 999;" out:fade class="bg-dark fixed inset-0 w-full h-screen flex justify-center items-center">
       <Spinner />
     </div>
   { /if }

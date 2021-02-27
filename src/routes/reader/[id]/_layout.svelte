@@ -175,5 +175,7 @@
   { /if }
 
   <!-- Content itself -->
-  <slot></slot>
+  <div class="pt-16">
+    <slot></slot>
+  </div>
 { /if }

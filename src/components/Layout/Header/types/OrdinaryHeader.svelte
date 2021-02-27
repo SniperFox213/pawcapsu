@@ -12,7 +12,7 @@
 </script>
 
 <!-- Header -->
-<div class="w-full flex justify-between items-center h-16 px-6 md:px-8">
+<div class="w-full flex justify-between items-center py-4 px-6 md:px-8">
   <!-- Pawcapsu Logotype (mobile) -->
   <div class="w-1/6 md:hidden flex items-center">
     <img class="w-7 h-7" src="https://res.cloudinary.com/lococovu-cdn/image/upload/v1610810215/logotypes/pawcapsu-white-small.svg" alt="pawcapsu logotype">

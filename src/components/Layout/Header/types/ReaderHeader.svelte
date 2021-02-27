@@ -102,9 +102,58 @@
 
   let chapters = [];
   let post = {};
+
+  let readerSettings = false;
+  let chaptersMenu   = false;
 </script>
 
-<!-- Mobile menu -->
+<!-- Chapters menu (desktop) -->
+{ #if chaptersMenu }
+  <!-- Background -->
+  <div transition:fade on:click={(e) => chaptersMenu = false} style="z-index: 1002;" class="hidden md:fixed inset-0 w-full h-full bg-dark opacity-60"></div>
+
+  <!-- Container -->
+  <div transition:fade style="z-index: 1002;" class="fixed inset-0 w-full h-full hidden md:flex justify-center items-center">
+
+    <div class="w-1/3 h-2/3 rounded-md bg-dark p-6">
+      <!-- Mini-header -->
+      <div class="w-full flex justify-between items-center">
+        <p class="text-white font-medium">Главы</p>
+
+        <!-- Button -->
+        <button on:click={(e) => chaptersMenu = false} class="w-8 h-8 flex justify-center items-center">
+          <Icon name="x" attrs={{ class: "w-6 h-6 text-white" }} />
+        </button>
+      </div>
+
+      <!-- Chapters themselves -->
+      <div class="overflow-hidden overflow-y-auto w-full flex-grow flex flex-wrap">
+        { #if chapters.list != null && chapters.list.length > 0 }
+          { #each chapters.list as chapter }
+            <div on:click={(e) => {
+              chaptersMenu = false;
+
+              goto(`/reader/${ $page.params.id }/${ chapter.id }`);
+            }} style="{ chapters.current == chapter.id ? "" : `background: ${ $settings["reader.theme.menu.plateBackground"]}` }" class="{ chapters.current == chapter.id ? "bg-indigo-400 text-white" : "" } w-full my-3 rounded-md p-3 flex items-center text-sm relative">
+              { chapter.title }
+
+              <!-- Status -->
+              { #if chapters.current == chapter.id || chapters.next == chapter.id }
+                <div class="absolute inset-y-0 right-0 pr-3 flex items-center">
+                  <p class="text-xs opacity-80">{ chapters.current == chapter.id ? "Текущая" : "Следующая" }</p>
+                </div>
+              { /if }
+            </div>
+          { /each }
+        { /if }
+      </div>
+    </div>
+
+  </div>
+{ /if }
+
+
+<!-- Menu (mobile) -->
 { #if menuOpened }
   <div style="z-index: 1000; overflow: hidden; overflow-y: auto; background: { $settings["reader.theme.menu.background"] }; color: { $settings["reader.theme.text.color"] }" class="transition duration-300 ease-in-out fixed md:hidden inset-0 w-full h-full mt-16 pb-24">
     { #if menuPage == 0 }
@@ -482,7 +531,7 @@
 { /if }
 
 <!-- Header -->
-<div style="z-index: 999; background: { $settings["reader.theme.header.background"] };" class="fixed top-0 w-full flex justify-between bg-white items-center h-16 px-6 md:px-8">
+<div style="z-index: 999; background: { $settings["reader.theme.header.background"] };" class="fixed top-0 w-full flex justify-between bg-white items-center h-16 md:px-8">
   <!-- Pawcapsu Logotype (mobile) -->
   <div on:click={(e) => {
     if (menuOpened) {
@@ -495,7 +544,7 @@
     } else {
       menuOpened = true;
     };
-  }} style="z-index: 1000;" class="absolute cursor-pointer inset-0 md:left-0 flex justify-center items-center px-6">
+  }} style="z-index: 1000;" class="absolute w-full flex justify-center cursor-pointer md:hidden justify-center items-center">
     { #if menuOpened }
       <!-- Back Button (if needed) -->
       { #if menuPage != 0 }
@@ -522,18 +571,25 @@
     { /if }
   </div>
 
+  <!-- Logotype (desktop) -->
+
+
   <!-- Actions -->
   <div style="z-index: 2;" class="hidden w-full md:flex justify-center items-center">
 
     <!-- Reader Settings -->
-    <button class="mx-1 p-2 relative">
+    <button on:click={(e) => {
+      readerSettings = true;
+    }} class="mx-1 p-2 relative">
       <Icon name="grid" attrs={{ class: "w-5 h-5 text-black" }}/>
 
       <div class="w-3 h-3 bg-red-400 rounded-full absolute top-0 right-0"></div>
     </button>
 
     <!-- Chapters -->
-    <button class="mx-1 p-2">
+    <button on:click={(e) => {
+      chaptersMenu = true;
+    }} class="mx-1 p-2">
       <Icon name="layers" attrs={{ class: "w-5 h-5 text-black" }}/>
     </button>
   </div>

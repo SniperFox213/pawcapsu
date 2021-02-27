@@ -176,78 +176,86 @@
       <!-- End notes -->
       <div class="w-full pt-8">
         
-        <div style="z-index: 1; background: { $settings["reader.theme.menu.plateBackground"] }" class="w-full flex flex-col items-center justify-center px-4 py-6 rounded-md relative">
-          <!-- Header -->
-          <div class="absolute inset-x-0 top-0 w-full flex justify-between p-4">
-            <p class="text-sm opacity-80">Конец</p>
+        <div class="w-full flex justify-center items-stretch">
+          <div style="z-index: 1; background: { $settings["reader.theme.menu.plateBackground"] }" class="w-full md:w-1/3 flex flex-col items-center justify-center px-4 py-6 rounded-md relative">
+            <!-- Header -->
+            <div class="absolute inset-x-0 top-0 w-full flex justify-between p-4">
+              <p class="text-sm opacity-80">Конец</p>
 
-            <button>
-              <Icon name="x" attrs={{ class: "w-5 h-5" }} />
-            </button>
-          </div>
-          
-          <!-- Text -->
-          <div class="mt-6 text-center">
-            <h1 class="text-2xl">Главы</h1>
-            <p class="text-sm opacity-80">Этот рассказ ещё не закончился! Продолжайте читать его и наслаждаться потрясающим сюжетом! Не забудьте заглянутьв <span style="border-color: { $settings["reader.theme.text.color"] }" class="border-b border-dotted">Плейс</span> этого рассказа.</p>
-          </div>
-
-          <!-- Chapters list -->
-          <div class="w-full mt-6">
-            { #if chapters != null && chapters.length > 0 }
+              <button>
+                <Icon name="x" attrs={{ class: "w-5 h-5" }} />
+              </button>
+            </div>
             
-              { #each chapters.filter((x) => {
-                let index = chapters.indexOf(x);
-                let ids   = [chapters[index - 1], chapters[index + 1]];
+            <!-- Text -->
+            <div class="mt-6 text-center">
+              <h1 class="text-2xl">Главы</h1>
+              <p class="text-sm opacity-80">Этот рассказ ещё не закончился! Продолжайте читать его и наслаждаться потрясающим сюжетом! Не забудьте заглянутьв <span style="border-color: { $settings["reader.theme.text.color"] }" class="border-b border-dotted">Плейс</span> этого рассказа.</p>
+            </div>
 
-                if (ids.find((x) => x != null ? x.id == $page.params.chapter || x.id == nextChapter || x.id == previousChapter : false)) return true;
-              }) as chapter }
-                <div style="background: { $page.params.chapter != chapter.id ? $settings["reader.theme.menu.background"] : "" };" on:click={(e) => goto(`/reader/${ $page.params.id }/${ chapter.id }`)} class="{ $page.params.chapter == chapter.id ? "bg-indigo-400 text-white" : "" } w-full my-4 rounded-md p-3 flex items-center text-sm relative">
-                  { chapter.title }
-    
-                  <!-- Status -->
-                  { #if $page.params.chapter == chapter.id || nextChapter == chapter.id }
-                    <div class="absolute inset-y-0 right-0 pr-3 flex items-center">
-                      <p class="text-xs opacity-80">{ $page.params.chapter == chapter.id ? "Текущая" : "Следующая" }</p>
-                    </div>
-                  { /if }
-                </div>
-              { /each }
+            <!-- Chapters list -->
+            <div class="w-full mt-6">
+              { #if chapters != null && chapters.length > 0 }
+              
+                { #each chapters.filter((x) => {
+                  let index = chapters.indexOf(x);
+                  let ids   = [chapters[index - 1], chapters[index + 1]];
 
-            { /if }
+                  if (ids.find((x) => x != null ? x.id == $page.params.chapter || x.id == nextChapter || x.id == previousChapter : false)) return true;
+                }) as chapter }
+                  <div style="background: { $page.params.chapter != chapter.id ? $settings["reader.theme.menu.background"] : "" };" on:click={(e) => goto(`/reader/${ $page.params.id }/${ chapter.id }`)} class="{ $page.params.chapter == chapter.id ? "bg-indigo-400 text-white" : "" } w-full my-4 rounded-md p-3 flex items-center text-sm relative">
+                    { chapter.title }
+      
+                    <!-- Status -->
+                    { #if $page.params.chapter == chapter.id || nextChapter == chapter.id }
+                      <div class="absolute inset-y-0 right-0 pr-3 flex items-center">
+                        <p class="text-xs opacity-80">{ $page.params.chapter == chapter.id ? "Текущая" : "Следующая" }</p>
+                      </div>
+                    { /if }
+                  </div>
+                { /each }
+
+              { /if }
+            </div>
+
+            <!-- Buttons -->
+            <div class="my-6 mb-12 w-full flex justify-center items-center">
+              <!-- Previous chapter -->
+              { #if previousChapter != null }
+                <button style="background: { $settings["reader.theme.menu.background"] };" on:click={(e) => goto(`/reader/${ $page.params.id }/${ previousChapter }`)} class="w-full rounded-md flex justify-center items-center py-3 my-3">
+                  <Icon name="chevron-left" attrs={{ class: "w-5 h-5" }} />
+
+                  <p class="text-sm ml-2">Предыдущая <span class="hidden md:inline-block">глава</span></p>
+                </button>
+              { /if }
+
+              <!-- Next Chapter -->
+              { #if nextChapter != null }
+                <button style="background: { $settings["reader.theme.menu.background"] };" on:click={(e) => goto(`/reader/${ $page.params.id }/${ nextChapter }`)} class="{ previousChapter != null ? "ml-3" : "" } w-full rounded-md flex justify-center items-center py-3 my-3">
+                  <p class="text-sm mr-2">Следующая <span class="hidden md:inline-block">глава</span></p>
+
+                  <Icon name="chevron-right" attrs={{ class: "w-5 h-5" }} />
+                </button>
+              { /if }
+            </div>
+
+            <!-- Dots -->
+            <div class="absolute inset-x-0 bottom-0 w-full flex md:hidden items-center opacity-60 justify-center py-4">
+              <div style="background: { $settings["reader.theme.text.color"] }" class="w-4 h-4 rounded-full mx-2"></div>
+              <div style="border-color: { $settings["reader.theme.text.color"] }" class="w-3 h-3 border-2 rounded-full mx-2"></div>
+            </div>
           </div>
 
-          <!-- Buttons -->
-          <div class="my-6 mb-12 w-full flex justify-center items-center">
-            <!-- Previous chapter -->
-            { #if previousChapter != null }
-              <button style="background: { $settings["reader.theme.menu.background"] };" on:click={(e) => goto(`/reader/${ $page.params.id }/${ previousChapter }`)} class="w-full rounded-md flex justify-center items-center py-3 my-3">
-                <Icon name="chevron-left" attrs={{ class: "w-5 h-5" }} />
-
-                <p class="text-sm ml-2">Предыдущая <span class="hidden md:block">глава</span></p>
-              </button>
-            { /if }
-
-            <!-- Next Chapter -->
-            { #if nextChapter != null }
-              <button style="background: { $settings["reader.theme.menu.background"] };" on:click={(e) => goto(`/reader/${ $page.params.id }/${ nextChapter }`)} class="{ previousChapter != null ? "ml-3" : "" } w-full rounded-md flex justify-center items-center py-3 my-3">
-                <p class="text-sm mr-2">Следующая <span class="hidden md:block">глава</span></p>
-
-                <Icon name="chevron-right" attrs={{ class: "w-5 h-5" }} />
-              </button>
-            { /if }
-          </div>
-
-          <!-- Dots -->
-          <div class="absolute inset-x-0 bottom-0 w-full flex items-center opacity-60 justify-center py-4">
-            <div style="background: { $settings["reader.theme.text.color"] }" class="w-4 h-4 rounded-full mx-2"></div>
-            <div style="border-color: { $settings["reader.theme.text.color"] }" class="w-3 h-3 border-2 rounded-full mx-2"></div>
+          <!-- Place ad -->
+          <div style="z-index: 1; background: { $settings["reader.theme.menu.plateBackground"] }" class="hidden w-1/3 ml-4 md:flex flex-col items-center justify-center px-4 py-6 rounded-md relative">
+            
           </div>
         </div>
 
         <div class="w-full mt-4 flex justify-end items-center">
-          <div style="background-color: { $settings["reader.theme.menu.plateBackground"] }" class="opacity-80 rounded-md px-2 py-0.5 mr-2">
-            <p class="text-xs">Нажми на второй кружочек, дружочек<br />У меня есть что тебе показать...</p>
+          <div style="background-color: { $settings["reader.theme.menu.plateBackground"] }" class="opacity-80 rounded-md px-2 py-0.5 md:py-1 md:px-4 mr-2">
+            <p class="text-xs md:hidden">Нажми на второй кружочек, дружочек<br />У меня есть что тебе показать...</p>
+            <p class="text-base hidden md:block">Посмотри на <span class="border-b border-dotted border-gray-900">Плейсы!</span><br /> Это отличная вещь для невероятно крутого общения!</p>
           </div>
 
           <img class="w-1/6 rounded-md" src="./stickers/0/32.png" alt="">

@@ -67,7 +67,7 @@
 </script>
 
 <!-- Container -->
-<div style="overflow: hidden; overflow-y: auto;" id="list" class="w-full h-full">
+<div class="w-full h-full">
 	<!-- Fast Actions -->
 	<div style="overflow: hidden; overflow-x: auto;" class="h-16 w-full relative mt-4 mb-6">
 		<div class="absolute inset-0 h-full md:px-6 flex items-stretch">
@@ -89,7 +89,7 @@
 			</div>
 
 			<!-- Divider -->
-			<div style="width: 2px;" class="hidden md:block mx-2 h-12 rounded-md bg-light-dark opacity-50"></div>
+			<div style="width: 2px;" class="hidden md:block mx-2 my-2 rounded-md bg-light-dark opacity-50"></div>
 
 			<!-- Some other filters -->
 			{ #each types as type }

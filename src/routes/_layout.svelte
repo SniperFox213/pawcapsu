@@ -87,18 +87,16 @@
 	</main>
 { :else }
 	<!-- Main -->
-	<main class="w-full flex bg-dark">
+	<main class="w-full h-min-screen flex bg-dark">
 		<Sidebar />
 
 		<!-- Container -->
-		<div style="z-index: 0;" class="w-full relative flex flex-col">
+		<div style="z-index: 0;" class="{ $page.path.includes("reader") ? "" : "md:pl-16" } w-full relative flex flex-col">
 			<Header />
 
 			<!-- Content -->
-			<div class="md:overflow-hidden md:overflow-y-auto relative w-full flex-grow pt-16">
-				<div class="relative md:absolute inset-0 w-full h-full">
-					<slot></slot>
-				</div>
+			<div class="relative w-full flex-grow">
+				<slot></slot>
 			</div>
 		</div>
 	</main>

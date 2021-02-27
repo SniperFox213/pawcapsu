@@ -63,41 +63,26 @@
 </script>
 
 <!-- Sidebar -->
-<sidebar style="z-index: 1;" class="{ collapsed ? "w-20" : "w-1/6" } { $page.path.includes("reader") ? "hidden" : "hidden md:flex" } flex-col bg-dark">
+<sidebar style="z-index: 1;" class="w-20 { $page.path.includes("reader") ? "hidden" : "hidden md:flex" } fixed h-full flex-col bg-dark">
   <!-- Logotype -->
   <div class="h-16 flex { collapsed ? "flex-col justify-center" : "justify-between pl-6 pr-3" } items-center w-full">
-    { #if collapsed }
-      <!-- Logotype -->
-      <img class="w-8 h-8 mb-4 mt-9" src="https://res.cloudinary.com/lococovu-cdn/image/upload/v1610810215/logotypes/pawcapsu-white-small.svg" alt="pawcapsu logotype">
-    { :else }
-      <h2 class="text-xl text-white font-bold">pawcapsu</h2>
-    { /if }
-
+    <!-- Logotype -->
+    <img class="w-8 h-8 mb-4 mt-9" src="https://res.cloudinary.com/lococovu-cdn/image/upload/v1610810215/logotypes/pawcapsu-white-small.svg" alt="pawcapsu logotype">
+  
     <!-- Button -->
-    <button on:click={() => switchLayout()}>
-      { #if collapsed }
-        <Icon name="menu" attrs={{ class: "w-5 h-5 text-light-dark" }} />
-      { :else }
-        <Icon name="chevron-left" attrs={{ class: "w-5 h-5 text-light-dark" }} />
-      { /if }
-    </button>
   </div>
 
   <!-- Links -->
-  <div class="{ collapsed ? "hidden md:flex flex-col items-center" : "px-6" } flex-grow w-full mt-8">
+  <div class="px-6 flex-grow w-full mt-8">
     <!-- Current Profile -->
     { #if $page.path.includes('profile') }
-      <div class="{ collapsed ? "mt-2" : "mb-8" }">
+      <div class="mb-8">
         <!-- Avatar -->
         <div style="background: url('https://d3gz42uwgl1r1y.cloudfront.net/sh/shiuk/avatar/2015/11/8feaa64e36f4d20f6732e9fd8e2f3df6.jpg'); background-size: cover; background-position: center;" class="w-9 h-9 rounded-lg"></div>
       </div>
     { /if }
 
     { #each categories as category }
-      { #if !collapsed }
-        <p in:fade class="text-xs text-light-dark uppercase">{ category.title }</p>
-      { /if }
-
       <!-- Items -->
       <div in:fade class="relative">
         { #each category.list as link }
@@ -113,17 +98,12 @@
                 <Icon name="lock" attrs={{ class: "w-4 h-4 text-white" }} />
               </div>
             { /if }
-
-            { #if !collapsed }
-              <!-- Text -->
-              <p class="text-md { $page.path.includes(link.id) ? "text-white" : "text-light-dark" } font-medium ml-4">{ link.title }</p>
-            { /if }
           </div>
         { /each }
       </div>
 
       <!-- Divider -->
-      <div style="height: .1rem" class="{ collapsed ? "w-10 my-2" : "w-full my-6" } rounded-lg bg-light-dark"></div>
+      <div style="height: .1rem" class="w-full my-6 rounded-lg bg-light-dark"></div>
     { /each }
     
     <!-- More -->
@@ -133,11 +113,6 @@
         <!-- Chevron Down Icon -->
         <svg class="w-4 h-4 text-lighter-dark" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>
       </div>
-
-      { #if !collapsed }
-        <!-- Text -->
-        <p class="text-md text-light-dark font-medium ml-4">Больше сервисов</p>
-      { /if }
     </div>
   </div>
 </sidebar>

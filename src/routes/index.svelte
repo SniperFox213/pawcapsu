@@ -57,7 +57,7 @@
 	});
 </script>
 
-<section class="w-full h-full flex justify-center items-center px-8">
+<section class="overflow-hidden overflow-y-auto w-full h-screen flex justify-center items-center px-8">
   <!-- Texts -->
   <div class="w-1/2 px-3">
     <h1 class="text-5xl text-gray-100 font-bold">Хороший контент для хорошего времяпровождения</h1>
