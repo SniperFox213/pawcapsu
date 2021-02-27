@@ -51,6 +51,13 @@
     // Saving scroll position
     cache.setCache(`reader.${ post.id }.scroll`, element.scrollTop);
 
+    // Determining current reader progress
+    let progress = (100/(element.scrollHeight/1.5)) * element.scrollTop;
+    if (progress > 100) progress = 100;
+    if (progress < 0) progress = 0;
+
+    settings.setSetting("reader.progress", progress);
+
     if (element.scrollTop >= element.scrollHeight/1.5) {
       console.log("READ");
     };

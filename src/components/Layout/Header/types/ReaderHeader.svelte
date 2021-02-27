@@ -482,7 +482,7 @@
 { /if }
 
 <!-- Header -->
-<div style="z-index: 999; background: { $settings["reader.theme.header.background"] }; border-color: { $settings["reader.theme.header.borderColor"] }" class="fixed top-0 w-full flex justify-between bg-white border-b items-center h-16 px-6 md:px-8">
+<div style="z-index: 999; background: { $settings["reader.theme.header.background"] };" class="fixed top-0 w-full flex justify-between bg-white items-center h-16 px-6 md:px-8">
   <!-- Pawcapsu Logotype (mobile) -->
   <div on:click={(e) => {
     if (menuOpened) {
@@ -555,4 +555,9 @@
       <Icon name="more-vertical" attrs={{ class: "w-5 h-5 text-black" }} />
     </button>
   </div>
+</div>
+
+<!-- Progress bar -->
+<div style="z-index: 998; height: 0.2rem; background: { $settings["reader.theme.header.borderColor"] };" class="fixed top-0 mt-16 w-full">
+  <div style="height: 0.2rem; width: { $settings["reader.progress"] == null ? "0" : $settings["reader.progress"] }%;" class="bg-indigo-400"></div>
 </div>
