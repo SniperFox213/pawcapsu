@@ -110,12 +110,12 @@
 <!-- Chapters menu (desktop) -->
 { #if chaptersMenu }
   <!-- Background -->
-  <div transition:fade on:click={(e) => chaptersMenu = false} style="z-index: 1002;" class="hidden md:fixed inset-0 w-full h-full bg-dark opacity-60"></div>
+  <div transition:fade on:click={(e) => chaptersMenu = false} style="z-index: 1005;" class="fixed inset-0 w-full h-full bg-dark opacity-60"></div>
 
   <!-- Container -->
-  <div transition:fade style="z-index: 1002;" class="fixed inset-0 w-full h-full hidden md:flex justify-center items-center">
+  <div transition:fade style="z-index: 1006;" class="fixed inset-0 w-full h-full hidden md:flex justify-center items-center">
 
-    <div class="w-1/3 h-2/3 rounded-md bg-dark p-6">
+    <div class="w-1/3 h-2/3 rounded-md bg-dark p-6 relative flex flex-col">
       <!-- Mini-header -->
       <div class="w-full flex justify-between items-center">
         <p class="text-white font-medium">Главы</p>
@@ -615,5 +615,5 @@
 
 <!-- Progress bar -->
 <div style="z-index: 998; height: 0.2rem; background: { $settings["reader.theme.header.borderColor"] };" class="fixed top-0 mt-16 w-full">
-  <div style="height: 0.2rem; width: { $settings["reader.progress"] == null ? "0" : $settings["reader.progress"] }%;" class="bg-indigo-400"></div>
+  <div style="height: 0.2rem; width: { $settings["reader.progress"] == null ? "0" : $settings["reader.progress"] }%;" class="transition duration-300 ease-in-out bg-indigo-400"></div>
 </div>

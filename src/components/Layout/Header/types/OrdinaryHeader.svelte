@@ -6,10 +6,17 @@
 
   // Importing components
   import Icon from "../../../Icon.svelte";
+	import SearchBar from "../../../Search/index.svelte";
 
   // Popovers
   import SessionsPopover from "../components/SessionsPopover.svelte";
+
+  let searchBarOpened = false;
 </script>
+
+{ #if searchBarOpened }
+  <SearchBar on:close={() => searchBarOpened = false} />
+{ /if }
 
 <!-- Header -->
 <div class="w-full flex justify-between items-center py-4 px-6 md:px-8">
@@ -19,7 +26,10 @@
   </div>
 
   <!-- Search -->
-  <div class="w-min md:w-2/3 rounded-md py-2 px-4 bg-light-dark flex items-center justify-between">
+  <div on:click={(e) => {
+    console.log("CLICKED");
+    searchBarOpened = true;
+  }} class="w-min md:w-2/3 rounded-md py-2 px-4 bg-light-dark flex items-center justify-between">
     <input class="w-min bg-light-dark text-white" placeholder="Search" type="text">
 
     <!-- Icon -->
