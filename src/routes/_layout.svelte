@@ -4,6 +4,7 @@
 
 	// Importing stores
 	import cache from "../stores/cache.js";
+	import settings from "../stores/account/settings.js";
 	import profile from "../stores/profile.js";
 	import socket from "../socket/io.js";
 
@@ -12,8 +13,9 @@
 
 	// Importing components
 	import { 
-		Sidebar, 
-		Header
+		Sidebar,
+		Header,
+		Icon
 	} from "../components";
 
 	let step   = null;
@@ -21,6 +23,8 @@
 
 	// onMount event
 	onMount(() => {
+		settings.setSetting("online", window.navigator.onLine);
+
 		// And now let's load our user
 		// profile
 		step = "profile";
@@ -54,6 +58,12 @@
 	<title>Пакапсу | Социальная сеть для лапок</title>
 </svelte:head>
 
+<svelte:window on:online={(e) => {
+	settings.setSetting("online", true);
+}} on:offline={(e) => {
+	settings.setSetting("online", false)
+}} />
+
 { #if !loaded }
 	<!-- Loader screen -->
 	<main class="w-full h-screen bg-dark flex flex-col justify-center items-center">
@@ -86,8 +96,17 @@
 		{ /if }
 	</main>
 { :else }
+	<div style="z-index: 2;" class="{ $settings["online"] ? "hidden" : "" } fixed top-0 bg-gray-900 w-full h-8 flex justify-center items-center">
+		<p class="text-xs text-white">Вы оффлайн</p>
+
+		<!-- Button -->
+		<div class="absolute inset-y-0 right-0 px-4 flex items-center">
+			<Icon name="x" attrs={{ class: "w-4 h-4 text-white" }} />
+		</div>
+	</div>
+
 	<!-- Main -->
-	<main class="w-full h-min-screen flex bg-dark">
+	<main class="{ $settings["online"] ? "" : "pt-8" } w-full h-min-screen flex bg-dark relative">
 		<Sidebar />
 
 		<!-- Container -->

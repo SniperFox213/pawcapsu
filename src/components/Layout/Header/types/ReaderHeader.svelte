@@ -531,7 +531,7 @@
 { /if }
 
 <!-- Header -->
-<div style="z-index: 999; background: { $settings["reader.theme.header.background"] };" class="fixed top-0 w-full flex justify-between bg-white items-center h-16 md:px-8">
+<div style="z-index: 999; background: { $settings["reader.theme.header.background"] };" class="{ $settings["online"] ? "" : "mt-8" } fixed top-0 w-full flex justify-between bg-white items-center h-16 md:px-8">
   <!-- Pawcapsu Logotype (mobile) -->
   <div on:click={(e) => {
     if (menuOpened) {
